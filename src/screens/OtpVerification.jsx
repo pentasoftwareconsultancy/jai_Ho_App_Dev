@@ -36,7 +36,7 @@ const OtpVerification = () => {
   const handleVerifyClick = () => {
     // Navigate to the ReadyToExplore page when Verify button is clicked
     if (isOtpComplete) {
-      navigation.navigate("TermsOfService");
+      navigation.navigate("ChangePassword");
     }
   };
 

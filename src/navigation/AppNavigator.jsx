@@ -27,6 +27,7 @@ import TermsOfServiceScreen from "../screens/TermsOfServiceScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import CookiesPolicyScreen from "../screens/CookiesPolicyScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 
 
@@ -53,8 +54,14 @@ const AppNavigator = () => {
       <Stack.Screen
         name="ForgotPassword"
         component={ForgotPasswordScreen}
-        options={{ headerShown: false }} // Hide header
+        options={{ headerShown: false }}
       />
+
+      {/* Change Password Screen */}
+      <Stack.Screen
+      name="ChangePassword"
+      component={ChangePasswordScreen}
+      options={{headerShown: false}} />
 
       {/* OtpVerification Screen */}
       <Stack.Screen
