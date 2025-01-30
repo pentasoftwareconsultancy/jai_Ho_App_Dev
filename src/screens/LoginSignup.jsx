@@ -1,3 +1,4 @@
+import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import {
   View,
@@ -11,8 +12,9 @@ import {
   ScrollView,
 } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import IconFA6 from 'react-native-vector-icons/FontAwesome6';
-// import auth from '@react-native-firebase/auth';
+import IconMaterial from 'react-native-vector-icons/MaterialIcons'; // For Apple icon
+import IconFA6 from 'react-native-vector-icons/FontAwesome6'; // For Twitter icon
+import GoogleIcon from "../../assets/images/icons/GoogleIcon";
 
 const LoginSignup = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState("Login");
@@ -20,6 +22,7 @@ const LoginSignup = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [language, setLanguage] = useState("English");
   const [rememberMe, setRememberMe] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
@@ -28,22 +31,16 @@ const LoginSignup = ({ navigation }) => {
     navigation.navigate("ForgotPassword");
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (!email.trim() || !password.trim()) {
-      Alert.alert("Input Required", "Please enter your email and password.");
+      // Alert.alert("Input Required", "Please enter your email and password.");
+      navigation.navigate("TermsOfService")
       return;
     }
-
-    try {
-      const userCredential = await auth().signInWithEmailAndPassword(email, password);
-      Alert.alert("Login Successful", "You have successfully logged in.");
-      navigation.navigate("Home"); // Navigate to the home screen or dashboard
-    } catch (error) {
-      Alert.alert("Login Failed", error.message);
-    }
+    Alert.alert("Login Successful", "You have successfully logged in.");
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = () => {
     if (!fullName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
       Alert.alert("Input Required", "Please fill in all fields.");
       return;
@@ -52,15 +49,7 @@ const LoginSignup = ({ navigation }) => {
       Alert.alert("Password Mismatch", "Passwords do not match.");
       return;
     }
-
-    try {
-      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
-      await userCredential.user.updateProfile({ displayName: fullName });
-      Alert.alert("Sign Up Successful", "You have successfully signed up.");
-      navigation.navigate("Home"); // Navigate to the home screen or dashboard
-    } catch (error) {
-      Alert.alert("Sign Up Failed", error.message);
-    }
+    Alert.alert("Sign Up Successful", "You have successfully signed up.");
   };
 
   const togglePasswordVisibility = () => {
@@ -84,8 +73,9 @@ const LoginSignup = ({ navigation }) => {
   };
 
   const handleSocialIconPress = (platform) => {
+    // Navigate to respective pages based on the platform,
     Alert.alert(`Social Icon Pressed`, `You pressed the ${platform} icon.`);
-  };
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
@@ -182,6 +172,38 @@ const LoginSignup = ({ navigation }) => {
               Don’t have an account? <Text style={styles.signUpLink}>Sign up</Text>
             </Text>
           </TouchableOpacity>
+
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => handleSocialIconPress('facebook')}>
+              <IconFA6 name="facebook" size={30} color="#3b5998" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSocialIconPress('twitter')}>
+              <IconFA6 name="x-twitter" size={30} color="#000000" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSocialIconPress('google')}>
+              {/* <IconFA6 name="google" size={30} color="#000000" style={styles.googleicon} /> */}
+              <GoogleIcon />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSocialIconPress('apple')}>
+              <IconFA6 name="apple" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.footerText}>
+            By continuing you accept our{" "}
+            <TouchableOpacity onPress={handleNavigateToTerms}>
+              <Text style={styles.linkText}>Terms of Service</Text>
+            </TouchableOpacity>{" "}
+            and{" "}
+            <TouchableOpacity onPress={handleNavigateToPrivacy}>
+              <Text style={styles.linkText}>Privacy Policy</Text>
+            </TouchableOpacity>{" "}
+            and{" "}
+            <TouchableOpacity onPress={handleNavigateToCookies}>
+              <Text style={styles.linkText}>Cookies Policy</Text>
+            </TouchableOpacity>
+            .
+          </Text>
         </>
       )}
 
@@ -244,24 +266,40 @@ const LoginSignup = ({ navigation }) => {
               Already have an account? <Text style={styles.signUpLink}>Login</Text>
             </Text>
           </TouchableOpacity>
+
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => handleSocialIconPress('facebook')}>
+              <IconFA6 name="facebook" size={30} color="#3b5998" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSocialIconPress('twitter')}>
+              <IconFA6 name="x-twitter" size={30} color="#000000" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSocialIconPress('google')}>
+              {/* <IconFA6 name="google" size={30} color="#000000" style={styles.googleicon} /> */}
+              <GoogleIcon />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSocialIconPress('apple')}>
+              <IconFA6 name="apple" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.footerText}>
+            By continuing you accept our{" "}
+            <TouchableOpacity onPress={handleNavigateToTerms}>
+              <Text style={styles.linkText}>Terms of Service</Text>
+            </TouchableOpacity>{" "}
+            and{" "}
+            <TouchableOpacity onPress={handleNavigateToPrivacy}>
+              <Text style={styles.linkText}>Privacy Policy</Text>
+            </TouchableOpacity>{" "}
+            and{" "}
+            <TouchableOpacity onPress={handleNavigateToCookies}>
+              <Text style={styles.linkText}>Cookies Policy</Text>
+            </TouchableOpacity>
+            .
+          </Text>
         </>
       )}
-
-      <Text style={styles.footerText}>
-        By continuing you accept our{" "}
-        <TouchableOpacity onPress={handleNavigateToTerms}>
-          <Text style={styles.linkText}>Terms of Service</Text>
-        </TouchableOpacity>{" "}
-        and{" "}
-        <TouchableOpacity onPress={handleNavigateToPrivacy}>
-          <Text style={styles.linkText}>Privacy Policy</Text>
-        </TouchableOpacity>{" "}
-        and{" "}
-        <TouchableOpacity onPress={handleNavigateToCookies}>
-          <Text style={styles.linkText}>Cookies Policy</Text>
-        </TouchableOpacity>
-        .
-      </Text>
     </ScrollView>
   );
 };
@@ -397,9 +435,11 @@ const styles = StyleSheet.create({
   icon: {
     margin: 5,
   },
+
   googleicon: {
     margin: 5,
   },
+
   footerText: {
     fontSize: 14,
     color: "#777",
@@ -410,6 +450,20 @@ const styles = StyleSheet.create({
     color: "#007BFF",
     textDecorationLine: "none",
   },
+  pickerContainer: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    marginBottom: 20,
+    overflow: 'hidden', // Ensures the dropdown is clipped to the border radius
+  },
+  picker: {
+    height: 50,
+    width: "100%",
+    color: "#000", // Set text color for the picker
+  },
 });
 
 export default LoginSignup;
+
