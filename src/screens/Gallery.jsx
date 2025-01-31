@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native';
 
 const Gallery = () => {
   const navigation = useNavigation();
 
   const HandlePhotoClick = (item) => {
-    // Navigate to another page and pass any data if needed
+    // Navigate to GalleryDetails and pass the image data
     navigation.navigate('GalleryDetails', { image: item.thumbnail });
   };
 
@@ -19,7 +19,7 @@ const Gallery = () => {
 
   const images = [
     { id: '1', thumbnail: require('../../assets/images/thumb.jpg') },
-    { id: '2', thumbnail: require('../../assets/images/thumb.jpg') },
+    { id: '2', thumbnail: require('../../assets/images/thumb1.jpeg') },
     { id: '3', thumbnail: require('../../assets/images/thumb.jpg') },
     { id: '4', thumbnail: require('../../assets/images/thumb.jpg') },
   ];
