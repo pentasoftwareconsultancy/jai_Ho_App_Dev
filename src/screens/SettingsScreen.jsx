@@ -27,13 +27,13 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          {/* <Text style={styles.headerTitle}>Settings</Text>
+        {/* <View style={styles.header}>
+          <Text style={styles.headerTitle}>Settings</Text>
 
           <Text style={styles.headerSubtitle}>
             Lorem ipsum dolor sit amet consectetur.
-          </Text> */}
-        </View>
+          </Text>
+        </View> */}
 
         <ScrollView>
           <View style={styles.profile}>
