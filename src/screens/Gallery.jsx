@@ -1,89 +1,116 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 
-const galleryData = [
-  {
-    id: '1',
-    image: 'https://via.placeholder.com/150/FF0000', // Replace with real image URLs
-    title: 'Hanuman Ji 1',
-  },
-  {
-    id: '2',
-    image: 'https://via.placeholder.com/150/00FF00',
-    title: 'Hanuman Ji 2',
-  },
-  {
-    id: '3',
-    image: 'https://via.placeholder.com/150/0000FF',
-    title: 'Hanuman Ji 3',
-  },
-  {
-    id: '4',
-    image: 'https://via.placeholder.com/150/FFFF00',
-    title: 'Hanuman Ji 4',
-  },
-  {
-    id: '5',
-    image: 'https://via.placeholder.com/150/FF00FF',
-    title: 'Hanuman Ji 5',
-  },
-];
+const Gallery = () => {
+  const navigation = useNavigation();
 
-const Gallery = ({ navigation }) => {
-  const renderGalleryItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.imageContainer}
-      onPress={() => navigation.navigate('GalleryDetails', { item })}
-    >
-      <Image source={{ uri: item.image }} style={styles.image} />
+  const HandlePhotoClick = (item) => {
+    // Navigate to another page and pass any data if needed
+    navigation.navigate('GalleryDetails', { image: item.thumbnail });
+  };
+
+  const data = [
+    { id: '1', title: 'Video', icon: '🎥' },
+    { id: '2', title: 'Favorite', icon: '⭐' },
+    { id: '3', title: 'Location', icon: '📍' },
+    { id: '4', title: 'All Files', icon: '📁' },
+  ];
+
+  const images = [
+    { id: '1', thumbnail: require('../../assets/images/thumb.jpg') },
+    { id: '2', thumbnail: require('../../assets/images/thumb.jpg') },
+    { id: '3', thumbnail: require('../../assets/images/thumb.jpg') },
+    { id: '4', thumbnail: require('../../assets/images/thumb.jpg') },
+  ];
+
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.icon}>{item.icon}</Text>
       <Text style={styles.title}>{item.title}</Text>
+    </View>
+  );
+
+  const renderThumbnail = ({ item }) => (
+    <TouchableOpacity onPress={() => HandlePhotoClick(item)}>
+      <Image source={item.thumbnail} style={styles.thumbnail} />
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Gallery</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>Hi Dhiraj</Text>
+      <Text style={styles.greeting}>Good Morning!</Text>
+      <TextInput style={styles.searchBar} placeholder="Search" />
+      <View style={{ height: 100 }}>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+      <Text style={styles.sectionTitle}>Photos</Text>
       <FlatList
-        data={galleryData}
-        keyExtractor={(item) => item.id}
+        data={images}
+        renderItem={renderThumbnail}
+        keyExtractor={item => item.id}
         numColumns={2}
-        renderItem={renderGalleryItem}
-        contentContainerStyle={styles.galleryList}
       />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
     backgroundColor: '#fff',
-    padding: 10,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
   },
-  galleryList: {
-    justifyContent: 'space-between',
+  greeting: {
+    fontSize: 18,
+    marginBottom: 16,
   },
-  imageContainer: {
-    flex: 1,
-    margin: 5,
-    alignItems: 'center',
-  },
-  image: {
-    width: 150,
-    height: 150,
+  searchBar: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
     borderRadius: 8,
+    paddingLeft: 8,
+    marginBottom: 16,
+  },
+  item: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 16,
+    marginRight: 16,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+    borderWidth: 0.5,
+  },
+  icon: {
+    fontSize: 24,
+    marginBottom: 8,
   },
   title: {
-    marginTop: 5,
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontSize: 18,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  thumbnail: {
+    width: 160,
+    height: 200,
+    margin: 13,
+    borderRadius: 15,
+    borderWidth: 1,
   },
 });
 

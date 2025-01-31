@@ -28,6 +28,7 @@ import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import CookiesPolicyScreen from "../screens/CookiesPolicyScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
+import GalleryDetails from "../screens/GalleryDetails";
 
 
 
@@ -170,6 +171,13 @@ const AppNavigator = () => {
       <Stack.Screen
         name="Gallery"
         component={Gallery} />
+
+        {/* Gallery Details Screen */}
+        <Stack.Screen
+        name="GalleryDetails"
+        component={GalleryDetails}
+        options={{ headerShown: false }} />
+
 
       <Stack.Screen
         name="Music"
