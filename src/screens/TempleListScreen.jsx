@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,31 +9,44 @@ import {
   StyleSheet,
 } from "react-native";
 
+// Local image import
+const TempleImage = require('../../assets/images/templeimage.jpg'); // Update the path and extension as needed
+
 const temples = [
   {
     id: "1",
     name: "Premal Hanuman Temple",
     location: "Pune",
     rating: 4.5,
-    image: "https://example.com/temple1.jpg",
+    image: TempleImage, // Local image
   },
   {
     id: "2",
     name: "Shri Hanuman and Shani Temple",
     location: "Pune",
     rating: 4.5,
-    image: "https://example.com/temple2.jpg",
+    image: "https://example.com/temple2.jpg", // Remote image
   },
   // Add more temples here
 ];
 
 const TempleListScreen = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredTemples = temples.filter((temple) =>
+    temple.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const renderTemple = ({ item }) => (
     <TouchableOpacity
       style={styles.templeCard}
       onPress={() => navigation.navigate("TempleDetails", { temple: item })}
     >
-      <Image source={{ uri: item.image }} style={styles.templeImage} />
+      {/* Handle both local and remote images */}
+      <Image
+        source={typeof item.image === "string" ? { uri: item.image } : item.image}
+        style={styles.templeImage}
+      />
       <View style={styles.templeInfo}>
         <Text style={styles.templeName}>{item.name}</Text>
         <Text style={styles.templeLocation}>{item.location}</Text>
@@ -49,9 +62,11 @@ const TempleListScreen = ({ navigation }) => {
         style={styles.searchInput}
         placeholder="Search"
         placeholderTextColor="#999"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
       />
       <FlatList
-        data={temples}
+        data={filteredTemples}
         renderItem={renderTemple}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}

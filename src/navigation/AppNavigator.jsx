@@ -29,8 +29,7 @@ import CookiesPolicyScreen from "../screens/CookiesPolicyScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import GalleryDetails from "../screens/GalleryDetails";
-
-
+import SearchScreen from "../screens/SearchBarScreen/SearchScreen";
 
 
 const Stack = createStackNavigator();
@@ -49,6 +48,13 @@ const AppNavigator = () => {
         name="LoginSignup"
         component={LoginSignup}
         options={{ headerShown: false }} // Hide header
+      />
+
+      {/* Search Screen */}
+      <Stack.Screen
+      name="Search"
+      component={SearchScreen}
+      options={{ headerShown: false }} // Hide header
       />
 
       {/* Forgot Password Screen */}

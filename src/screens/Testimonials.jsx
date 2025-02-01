@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // For the play button and star icons
 
@@ -136,33 +136,24 @@ const Testimonials = () => {
     navigation.navigate('VideoPlayer', { videoUrl });
   };
 
-  const renderVideoTestimonial = ({ item }) => (
-    <View style={styles.videoItem}>
-      <TouchableOpacity onPress={() => handleVideoPlay(item.videoUrl)} style={styles.imageContainer}>
-        <Image source={item.avatar} style={styles.thumbnail} />
-        <View style={styles.playIconContainer}>
-          <Icon name="play-circle" size={50} color="#fff" />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.videoContent}>
-        <View style={styles.testimonialHeader}>
-          <Text style={styles.testimonialName}>{item.name}</Text>
-          <Text style={styles.testimonialDate}>{item.date}</Text>
-        </View>
-        <View style={styles.ratingContainer}>
-          <Icon name="star" size={16} color="#FFD700" style={styles.starIcon} />
-          <Text style={styles.ratingText}>{item.rating}</Text>
-        </View>
-        <Text style={styles.testimonialDescription}>{item.description}</Text>
-      </View>
-    </View>
-  );
+  const handleCardPress = (item) => {
+    // Handle card press event
+    // Alert.alert(item.name)
+    console.log('Card pressed:', item.name);
+    // You can navigate to a detailed view or perform any other action
+    navigation.navigate("testimonialDetails")
+  };
 
-  const renderAdditionalTestimonial = ({ item }) => (
-    <View style={styles.additionalTestimonialItem}>
-      <View style={styles.testimonialContent}>
-        <Image source={item.avatar} style={styles.testimonialImage} />
-        <View style={styles.testimonialDetails}>
+  const renderVideoTestimonial = ({ item }) => (
+    <TouchableOpacity onPress={() => handleCardPress(item)}>
+      <View style={styles.videoItem}>
+        <TouchableOpacity onPress={() => handleVideoPlay(item.videoUrl)} style={styles.imageContainer}>
+          <Image source={item.avatar} style={styles.thumbnail} />
+          <View style={styles.playIconContainer}>
+            <Icon name="play-circle" size={50} color="#fff" />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.videoContent}>
           <View style={styles.testimonialHeader}>
             <Text style={styles.testimonialName}>{item.name}</Text>
             <Text style={styles.testimonialDate}>{item.date}</Text>
@@ -174,7 +165,28 @@ const Testimonials = () => {
           <Text style={styles.testimonialDescription}>{item.description}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
+  );
+
+  const renderAdditionalTestimonial = ({ item }) => (
+    <TouchableOpacity onPress={() => handleCardPress(item)}>
+      <View style={styles.additionalTestimonialItem}>
+        <View style={styles.testimonialContent}>
+          <Image source={item.avatar} style={styles.testimonialImage} />
+          <View style={styles.testimonialDetails}>
+            <View style={styles.testimonialHeader}>
+              <Text style={styles.testimonialName}>{item.name}</Text>
+              <Text style={styles.testimonialDate}>{item.date}</Text>
+            </View>
+            <View style={styles.ratingContainer}>
+              <Icon name="star" size={16} color="#FFD700" style={styles.starIcon} />
+              <Text style={styles.ratingText}>{item.rating}</Text>
+            </View>
+            <Text style={styles.testimonialDescription}>{item.description}</Text>
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -215,7 +227,7 @@ const Testimonials = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-      
+    backgroundColor: '#f5f5f5',
   },
   backButton: {
     padding: 15,
@@ -228,19 +240,16 @@ const styles = StyleSheet.create({
   },
   videoTestimonialContainer: {
     padding: 20,
-    
-
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'left',
-    
   },
   videoItem: {
     marginRight: 15,
-    width: 300, // Increased width for each video item
+    width: 350, // Increased width for each video item
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
@@ -248,7 +257,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 3,
-    
   },
   imageContainer: {
     position: 'relative',
@@ -266,7 +274,6 @@ const styles = StyleSheet.create({
   },
   videoContent: {
     padding: 15,
-    
   },
   testimonialHeader: {
     flexDirection: 'row',
