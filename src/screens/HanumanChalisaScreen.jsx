@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Alert,
+  Switch, // Import Switch
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -33,16 +34,6 @@ export default function HanumanChalisaScreen({ navigation }) {
     setIsPlaying(!isPlaying);
   };
 
-  // Handle Backward and Forward Button
-  const HandleBackwardButton = () => {
-    // Logic to handle backward button
-    Alert.alert("Backward Button Pressed")
-  }
-
-  const HandleForwardButton = () => {
-    Alert.alert("Forward Button Pressed")
-  }
-
   // Function to handle gender selection
   const handleGenderSelection = (gender) => {
     setSelectedGender(gender);
@@ -61,6 +52,11 @@ export default function HanumanChalisaScreen({ navigation }) {
   const handleVerseSelection = (verse) => {
     Alert.alert(`${verse} clicked`);
     setSelectedVerse(verse); // Update selected verse
+  };
+
+  // Function to toggle audio/video
+  const toggleSwitch = () => {
+    setIsAudio(previousState => !previousState); // Toggle between audio and video
   };
 
   return (
@@ -142,39 +138,37 @@ export default function HanumanChalisaScreen({ navigation }) {
       </View>
 
       {/* Audio/Video Section */}
-      <View style={styles.audioVideoSection}>
-        <TouchableOpacity style={styles.audioButton} onPress={() => setIsAudio(!isAudio)}>
-          <MaterialIcons
-            name={isAudio ? "pause" : "play-arrow"}
-            size={30}
-            color="#FF8C00"
-          />
-          <Text style={styles.audioText}>{isAudio ? "Audios" : "Videos"}</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Slider */}
-      <Slider
-        style={styles.slider}
-        minimumValue={0}
-        maximumValue={330} // 5 minutes and 30 seconds in seconds
-        value={sliderValue}
-        onValueChange={(value) => setSliderValue(value)}
-        minimumTrackTintColor="#FF6E30"
-        maximumTrackTintColor="#CCCCCC"
-        thumbTintColor="#FF6E30"
-      />
-      <View style={styles.timeLabels}>
-        <Text style={styles.timeText}>{formatTime(sliderValue)}</Text>
-        <Text style={styles.timeText}>5:30</Text> {/* Fixed maximum time */}
-      </View>
-
-      {/* Media Controls */}
       <View style={styles.audioSection}>
+        <View style={styles.toggleContainer}>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isAudio ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isAudio}
+          />
+          <Text style={styles.toggleLabel}>Videos</Text>
+        </View>
+
+        {/* Slider */}
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={330} // 5 minutes and 30 seconds in seconds
+          value={sliderValue}
+          onValueChange={(value) => setSliderValue(value)}
+          minimumTrackTintColor="#FF6E30"
+          maximumTrackTintColor="#CCCCCC"
+          thumbTintColor="#FF6E30"
+        />
+        <View style={styles.timeLabels}>
+          <Text style={styles.timeText}>{formatTime(sliderValue)}</Text>
+          <Text style={styles.timeText}>5:30</Text> {/* Fixed maximum time */}
+        </View>
+
+        {/* Media Controls */}
         <View style={styles.mediaControls}>
-          <TouchableOpacity onPress={HandleBackwardButton}>
-            <Ionicons name="play-back" size={40} color="#000" />
-          </TouchableOpacity>
+          <Ionicons name="play-back" size={40} color="#000" />
           <TouchableOpacity onPress={togglePlayPause}>
             <Ionicons
               name={isPlaying ? "pause" : "play"}
@@ -182,13 +176,10 @@ export default function HanumanChalisaScreen({ navigation }) {
               color="#FF6E30"
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={HandleForwardButton}>
-            <Ionicons name="play-forward" size={40} color="#000" />
-          </TouchableOpacity>
+          <Ionicons name="play-forward" size={40} color="#000" />
         </View>
       </View>
-    </View >
+    </View>
   );
 }
 
@@ -231,15 +222,14 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.19,
   },
   verseSelector: {
-    borderRadius: 20,
-    borderWidth: 0.9,
-    borderColor: "#CCC",
+    borderRadius: 15,
+    borderWidth: 0.5,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: height * 0.03,
+    marginVertical: height * 0.02,
   },
   verseButton: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 8,
     paddingHorizontal: 16,
     flex: 1, // Allow the button to take equal space
@@ -290,29 +280,25 @@ const styles = StyleSheet.create({
   selectedGenderText: {
     color: "#FFF",
   },
-  audioVideoSection: {
-    alignItems: "flex-end",
-    marginVertical: height * 0.0,
-  },
   audioSection: {
     alignItems: "center",
     marginVertical: height * 0.02,
   },
-  audioButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#FFEAAD",
-    borderRadius: 20,
-    padding: 8,
-    paddingHorizontal: 16,
+  toggleContainer: {
+    flexDirection: 'row', // Align items horizontally
+    alignItems: 'center', // Center items vertically
+    justifyContent: 'flex-end', // Align items to the right (flex-end)
+    width: '100%', // Take full width
+    marginVertical: height * 0.02, // Add vertical margin
   },
-  audioText: {
-    color: "#FF6E30",
-    marginLeft: 8,
+  toggleLabel: {
+    color: '#FF6E30',
+    fontWeight: 'bold',
+    marginLeft: 10, // Add some spacing between the Switch and the Text
   },
   slider: {
     width: "100%",
-    marginVertical: height * 0.0,
+    marginVertical: height * 0.02,
   },
   timeLabels: {
     flexDirection: "row",
