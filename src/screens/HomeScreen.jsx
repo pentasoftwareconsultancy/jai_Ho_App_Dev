@@ -8,36 +8,32 @@ import {
   ScrollView,
 } from "react-native";
 
+// Import local images
+import bajanIcon from "../../assets/images/HanumanChalisaIcon.png"
+import japaIcon from "../../assets/images/HanumanChalisaIcon.png"
+import mantraIcon from "../../assets/images/HanumanChalisaIcon.png"
+import hanumanChalisaIcon from "../../assets/images/HanumanChalisaIcon.png"
+import storyIcon from "../../assets/images/HanumanChalisaIcon.png"
+import liveArtiIcon from "../../assets/images/HanumanChalisaIcon.png"
+import templesIcon from "../../assets/images/HanumanChalisaIcon.png"
+
+import learnHanumanChalisaImage from "../../assets/images/HanumanChalisaIcon.png"
+import testimonyImage from "../../assets/images/HanumanChalisaIcon.png"
+
 const HomeScreen = ({ navigation }) => {
   const features = [
-    { name: "Bajan", icon: "https://path-to-bajan-icon.png", route: "Bajan" },
-    { name: "Japa", icon: "https://path-to-japa-icon.png", route: "Japa" },
-    { name: "Mantra", icon: "https://path-to-mantra-icon.png", route: "Mantra" },
-    {
-      name: "Hanuman Chalisa",
-      icon: "https://path-to-hanuman-chalisa-icon.png",
-      route: "HanumanChalisa",
-    },
-    { name: "Story", icon: "https://path-to-story-icon.png", route: "Story" },
-    {
-      name: "Live Arti",
-      icon: "https://path-to-live-arti-icon.png",
-      route: "LiveArti",
-    },
-    { name: "Temples", icon: "https://path-to-temples-icon.png", route: "Temples" },
+    { name: "Bajan", icon: bajanIcon, route: "Bajan" },
+    { name: "Japa", icon: japaIcon, route: "Japa" },
+    { name: "Mantra", icon: mantraIcon, route: "Mantra" },
+    { name: "Hanuman Chalisa", icon: hanumanChalisaIcon, route: "HanumanChalisa" },
+    { name: "Story", icon: storyIcon, route: "Story" },
+    { name: "Live Arti", icon: liveArtiIcon, route: "LiveArti" },
+    { name: "Temples", icon: templesIcon, route: "Temples" },
   ];
 
   const otherFeatures = [
-    {
-      name: "Learn Hanuman Chalisa",
-      image: "https://path-to-feature1.png",
-      route: "LearnHanumanChalisa", // Add route for this feature
-    },
-    {
-      name: "Testimony",
-      image: "https://path-to-feature2.png",
-      route: "Testimony", // Add route for this feature
-    },
+    { name: "Learn Hanuman Chalisa", image: learnHanumanChalisaImage, route: "LearnHanumanChalisa" },
+    { name: "Testimony", image: testimonyImage, route: "Testimony" },
   ];
 
   return (
@@ -57,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
               style={styles.featureCard}
               onPress={() => navigation.navigate(feature.route)}
             >
-              <Image source={{ uri: feature.icon }} style={styles.featureIcon} />
+              <Image source={feature.icon} style={styles.featureIcon} />
               <Text style={styles.featureName}>{feature.name}</Text>
             </TouchableOpacity>
           ))}
@@ -70,27 +66,31 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity
               key={index}
               style={styles.otherFeatureCard}
-              onPress={() => navigation.navigate(feature.route)} // Navigate on press
+              onPress={() => navigation.navigate(feature.route)}
             >
-              <Image
-                source={{ uri: feature.image }}
-                style={styles.otherFeatureImage}
-              />
+              <Image source={feature.image} style={styles.otherFeatureImage} />
               <Text style={styles.otherFeatureText}>{feature.name}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
       </ScrollView>
-      
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
-  header: { marginBottom: 20 },
-  greeting: { fontSize: 20, fontWeight: "bold" },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 20
+  },
+  header: {
+    marginBottom: 20
+  },
+  greeting: {
+    fontSize: 20,
+    fontWeight: "bold"
+  },
   featuresGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -101,11 +101,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  featureIcon: { width: 70, height: 70, borderRadius: 35 },
-  featureName: { marginTop: 10, fontSize: 14, textAlign: "center" },
-  otherFeaturesTitle: { fontSize: 18, fontWeight: "bold", marginVertical: 20 },
-  otherFeatureCard: { marginRight: 20 },
-  otherFeatureImage: { width: 150, height: 100, borderRadius: 10 },
+  featureIcon: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    borderWidth: 0.2
+  },
+  featureName: {
+    marginTop: 10,
+    fontSize: 14,
+    textAlign: "center"
+  },
+  otherFeaturesTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 20
+  },
+  otherFeatureCard: {
+    marginRight: 20,
+    
+
+  },
+  otherFeatureImage: {
+    width: 260,
+    height: 230,
+    borderRadius: 5,
+    borderWidth: 0.5
+    
+  },
   otherFeatureText: {
     marginTop: 10,
     fontSize: 14,
