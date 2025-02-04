@@ -30,6 +30,7 @@ import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import GalleryDetails from "../screens/GalleryDetails";
 import SearchScreen from "../screens/SearchBarScreen/SearchScreen";
+import HanumanChalisaVideoScreen from "../screens/HanumanChalisaVideoScreen";
 
 
 const Stack = createStackNavigator();
@@ -69,6 +70,13 @@ const AppNavigator = () => {
       name="ChangePassword"
       component={ChangePasswordScreen}
       options={{headerShown: false}} />
+
+      {/* Hanuman Chalisa video Screen */}
+      <Stack.Screen
+      name="HanumanChalisaVideoScreen"
+      component={HanumanChalisaVideoScreen}
+      options={{headerShown: false}} />
+
 
       {/* OtpVerification Screen */}
       <Stack.Screen

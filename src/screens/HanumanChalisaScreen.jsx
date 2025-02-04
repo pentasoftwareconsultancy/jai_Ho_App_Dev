@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   Dimensions,
   Alert,
-  Switch, // Import Switch
+  Switch,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import ImageUri from "../../assets/images/HanumanChalisaIcon.png";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Get screen dimensions
 const { width, height } = Dimensions.get("window");
@@ -23,6 +24,13 @@ export default function HanumanChalisaScreen({ navigation }) {
   const [selectedGender, setSelectedGender] = useState("Male");
   const [isAudio, setIsAudio] = useState(true); // State to toggle between audio and video
   const [selectedVerse, setSelectedVerse] = useState("01"); // State to track selected verse
+
+  // Reset toggle switch when navigating back
+  useFocusEffect(
+    useCallback(() => {
+      setIsAudio(false); // Set toggle to left (OFF)
+    }, [])
+  );
 
   // Handle Back Button Functionality
   const handleBackButton = () => {
@@ -38,7 +46,6 @@ export default function HanumanChalisaScreen({ navigation }) {
   const handleGenderSelection = (gender) => {
     setSelectedGender(gender);
     Alert.alert(`${gender} clicked`);
-    // navigation.navigate(`${gender}Page`);
   };
 
   // Function to format time from seconds to MM:SS
@@ -54,9 +61,13 @@ export default function HanumanChalisaScreen({ navigation }) {
     setSelectedVerse(verse); // Update selected verse
   };
 
-  // Function to toggle audio/video
-  const toggleSwitch = () => {
-    setIsAudio(previousState => !previousState); // Toggle between audio and video
+  // Function to toggle audio/video and navigate to HanumanChalisaVideoScreen
+  const toggleSwitch = (value) => {
+    setIsAudio(value); // Update the state
+    if (value) {
+      // If the switch is toggled to "Videos" (false), navigate to HanumanChalisaVideoScreen
+      navigation.navigate("HanumanChalisaVideoScreen");
+    }
   };
 
   return (
@@ -67,10 +78,7 @@ export default function HanumanChalisaScreen({ navigation }) {
           <Ionicons name="arrow-back" size={24} color="#FF6E30" />
         </TouchableOpacity>
         <Text style={styles.greeting}>Good Morning!</Text>
-        <Image
-          source={ImageUri}
-          style={styles.profileImage}
-        />
+        <Image source={ImageUri} style={styles.profileImage} />
       </View>
 
       {/* Image and Title */}
@@ -79,12 +87,7 @@ export default function HanumanChalisaScreen({ navigation }) {
           colors={["#ff8e42", "#f74c32"]}
           style={styles.imageBorder}
         >
-          <Image
-            source={{
-              uri: ImageUri,
-            }}
-            style={styles.hanumanImage}
-          />
+          <Image source={{ uri: ImageUri }} style={styles.hanumanImage} />
         </LinearGradient>
       </View>
 
@@ -95,9 +98,9 @@ export default function HanumanChalisaScreen({ navigation }) {
             key={index}
             style={[
               styles.verseButton,
-              selectedVerse === item && styles.selectedVerseButton, // Apply selected style
+              selectedVerse === item && styles.selectedVerseButton,
             ]}
-            onPress={() => handleVerseSelection(item)} // Handle verse selection
+            onPress={() => handleVerseSelection(item)}
           >
             <Text style={styles.verseText}>{item}</Text>
           </TouchableOpacity>
@@ -147,7 +150,7 @@ export default function HanumanChalisaScreen({ navigation }) {
             onValueChange={toggleSwitch}
             value={isAudio}
           />
-          <Text style={styles.toggleLabel}>Videos</Text>
+          {/* <Text style={styles.toggleLabel}>Videos</Text> */}
         </View>
 
         {/* Slider */}
@@ -232,11 +235,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 8,
     paddingHorizontal: 16,
-    flex: 1, // Allow the button to take equal space
-    alignItems: "center", // Center the text horizontally
+    flex: 1,
+    alignItems: "center",
   },
   selectedVerseButton: {
-    backgroundColor: "#FF8C00", // Change this to your desired selected color
+    backgroundColor: "#FF8C00",
   },
   verseText: {
     color: "#000000",
@@ -285,16 +288,16 @@ const styles = StyleSheet.create({
     marginVertical: height * 0.02,
   },
   toggleContainer: {
-    flexDirection: 'row', // Align items horizontally
-    alignItems: 'center', // Center items vertically
-    justifyContent: 'flex-end', // Align items to the right (flex-end)
-    width: '100%', // Take full width
-    marginVertical: height * 0.02, // Add vertical margin
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    width: "100%",
+    marginVertical: height * 0.02,
   },
   toggleLabel: {
-    color: '#FF6E30',
-    fontWeight: 'bold',
-    marginLeft: 10, // Add some spacing between the Switch and the Text
+    color: "#FF6E30",
+    fontWeight: "bold",
+    marginLeft: 10,
   },
   slider: {
     width: "100%",
@@ -306,7 +309,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   timeText: {
-    fontSize: width * 0.050,
+    fontSize: width * 0.05,
     color: "#555",
   },
   mediaControls: {
