@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet, Dimensions } from "react-native";
-// import Video from "react-native-video";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -25,29 +24,29 @@ const HanumanChalisaVideoScreen = () => {
     { id: "10", name: "Neha Verma", comment: "My go-to version of Hanuman Chalisa!" }
   ];
 
-
   return (
     <View style={styles.container}>
       {/* Back Button */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={24} color="black" />
+          <AntDesign name="arrowleft" size={24} color="#FF6E30" />
         </TouchableOpacity>
-        <TouchableOpacity></TouchableOpacity>
         <Text style={styles.headerTitle}>Videos</Text>
-        <TouchableOpacity style={styles.videoButton} onPress={() => navigation.navigate("HanumanChalisa")}>
-          <Text style={styles.videoText}>Audios</Text>
-        </TouchableOpacity>
+
+        {/* Toggle Button for Audios */}
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity
+            style={[styles.versionButton, selectedVersion === "Audios" && styles.activeButton]}
+            onPress={() => navigation.navigate("HanumanChalisa")}
+          >
+            <Text style={[styles.versionText, selectedVersion === "Audios" && styles.activeText]}>
+              Audios
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* Video Player */}
-      {/* <Video
-        source={{ uri: "https://your-video-link.com/video.mp4" }}
-        style={styles.video}
-        controls
-        resizeMode="cover"
-        paused={paused}
-      /> */}
+      {/* Play/Pause Button */}
       <TouchableOpacity style={styles.playPauseButton} onPress={() => setPaused(!paused)}>
         <FontAwesome name={paused ? "play" : "pause"} size={24} color="white" />
       </TouchableOpacity>
@@ -65,7 +64,7 @@ const HanumanChalisaVideoScreen = () => {
         </View>
       </View>
 
-      {/* Selection Buttons */}
+      {/* Selection Buttons for Male, Female, and Child */}
       <View style={styles.buttonGroup}>
         {["Male", "Female", "Child"].map((version) => (
           <TouchableOpacity
@@ -80,18 +79,23 @@ const HanumanChalisaVideoScreen = () => {
         ))}
       </View>
 
-      {/* Comments Section */}
       <FlatList
         data={comments}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.commentCard}>
-            <Image source={{ uri: "https://your-profile-image.com/user.png" }} style={styles.avatar} />
-            <View>
+          <TouchableOpacity
+            style={styles.commentCard}
+            onPress={() => {
+              // Handle the press event here, such as navigating or any other action
+              console.log(`Comment by ${item.name} clicked`);
+            }}
+          >
+            <Image source={require('../../assets/images/user.png')} style={styles.avatar} />
+            <View style={styles.commentTextContainer}>
               <Text style={styles.commentUser}>{item.name}</Text>
               <Text style={styles.commentText}>{item.comment}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
@@ -100,10 +104,8 @@ const HanumanChalisaVideoScreen = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F8F8F8", marginTop: 20 },
-  header: { flexDirection: "row", justifyContent: "space-between", padding: 16, alignItems: "center", top: 10},
+  header: { flexDirection: "row", justifyContent: "space-between", padding: 16, alignItems: "center", top: 10 },
   headerTitle: { fontSize: 20, fontWeight: "bold" },
-  videoButton: { backgroundColor: "#FFA500", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 12 },
-  videoText: { color: "white", fontWeight: "bold" },
   video: { width: "100%", height: height * 0.3, borderRadius: 10 },
   playPauseButton: {
     position: "absolute",
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 50,
   },
-  videoTitle: { fontSize: 18, fontWeight: "bold", marginVertical: 10, paddingHorizontal: 16, },
+  videoTitle: { fontSize: 18, fontWeight: "bold", marginVertical: 10, paddingHorizontal: 16 },
   videoStats: { flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 16, marginBottom: 100 },
   stats: { flexDirection: "row", alignItems: "center" },
   statsText: { marginLeft: 6, color: "#666" },
@@ -129,10 +131,23 @@ const styles = StyleSheet.create({
   activeButton: { backgroundColor: "#FFA500", borderColor: "#FFA500" },
   versionText: { color: "#888", fontWeight: "bold" },
   activeText: { color: "white" },
-  commentCard: { flexDirection: "row", padding: 12, alignItems: "center", backgroundColor: "white", marginVertical: 6, borderRadius: 10, marginHorizontal: 16 },
-  avatar: { width: 40, height: 40, borderRadius: 20, marginRight: 12 },
-  commentUser: { fontWeight: "bold", fontSize: 14 },
-  commentText: { color: "#666" }
+  commentCard: {
+    flexDirection: "row",
+    padding: 12,
+    alignItems: "center",
+    backgroundColor: "white",
+    marginVertical: 6,
+    borderRadius: 10,
+    marginHorizontal: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3
+  },
+  avatar: { width: 70, height: 70, borderRadius: 50, marginRight: 20 },
+  commentTextContainer: { flex: 1 },
+  commentUser: { fontWeight: "bold", fontSize: 14, color: "#333" },
+  commentText: { color: "#666", fontSize: 12, marginTop: 4 }
 });
 
 export default HanumanChalisaVideoScreen;

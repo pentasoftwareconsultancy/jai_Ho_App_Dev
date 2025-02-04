@@ -72,13 +72,21 @@ export default function HanumanChalisaScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
+      {/* Header with Switch toggle */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBackButton}>
           <Ionicons name="arrow-back" size={24} color="#FF6E30" />
         </TouchableOpacity>
-        <Text style={styles.greeting}>Good Morning!</Text>
-        <Image source={ImageUri} style={styles.profileImage} />
+        <View style={styles.toggleContainer}>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isAudio ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isAudio}
+          />
+          <Text style={styles.toggleLabel}>Audio/Video</Text>
+        </View>
       </View>
 
       {/* Image and Title */}
@@ -142,17 +150,6 @@ export default function HanumanChalisaScreen({ navigation }) {
 
       {/* Audio/Video Section */}
       <View style={styles.audioSection}>
-        <View style={styles.toggleContainer}>
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isAudio ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isAudio}
-          />
-          {/* <Text style={styles.toggleLabel}>Videos</Text> */}
-        </View>
-
         {/* Slider */}
         <Slider
           style={styles.slider}
@@ -198,15 +195,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: height * 0.08,
   },
-  greeting: {
-    fontSize: width * 0.05,
-    fontWeight: "bold",
-    color: "#000",
+  toggleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
-  profileImage: {
-    width: width * 0.1,
-    height: width * 0.1,
-    borderRadius: width * 0.05,
+  toggleLabel: {
+    fontSize: width * 0.05,
+    marginLeft: 10,
+    color: "#000",
   },
   imageContainer: {
     alignItems: "center",
@@ -244,35 +240,36 @@ const styles = StyleSheet.create({
   verseText: {
     color: "#000000",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
   },
   textContent: {
     alignItems: "center",
     marginVertical: height * 0.02,
   },
   primaryText: {
-    fontSize: width * 0.045,
+    fontSize: width * 0.06,
+    // fontSize: 24,
     fontWeight: "bold",
     color: "#000",
     textAlign: "center",
   },
   secondaryText: {
-    fontSize: width * 0.04,
+    fontSize: width * 0.05,
     color: "#555",
     textAlign: "center",
   },
   genderSelector: {
     flexDirection: "row",
     justifyContent: "center",
-    marginVertical: height * 0.02,
+    marginVertical: height * 0.08,
   },
   genderButton: {
     borderWidth: 1,
     borderColor: "#CCC",
     borderRadius: 20,
     padding: 8,
-    paddingHorizontal: 16,
-    marginHorizontal: 8,
+    paddingHorizontal: 20,
+    marginHorizontal: 10,
   },
   selectedGenderButton: {
     backgroundColor: "#FF6E30",
@@ -285,23 +282,11 @@ const styles = StyleSheet.create({
   },
   audioSection: {
     alignItems: "center",
-    marginVertical: height * 0.02,
-  },
-  toggleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    width: "100%",
-    marginVertical: height * 0.02,
-  },
-  toggleLabel: {
-    color: "#FF6E30",
-    fontWeight: "bold",
-    marginLeft: 10,
+    marginVertical: height * 0.0,
   },
   slider: {
     width: "100%",
-    marginVertical: height * 0.02,
+    marginVertical: height * 0.03,
   },
   timeLabels: {
     flexDirection: "row",
@@ -316,6 +301,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "70%",
-    marginVertical: height * 0.05,
+    marginVertical: height * 0.04,
   },
 });
