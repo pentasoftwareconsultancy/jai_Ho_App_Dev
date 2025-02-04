@@ -19,7 +19,7 @@ const TempleDetailsScreen = ({ route, navigation }) => {
       <Image source={{ uri: temple.image }} style={styles.templeImage} />
       <Text style={styles.templeName}>{temple.name}</Text>
       <Text style={styles.templeLocation}>{temple.location}</Text>
-      <Text style={styles.templeRating}>⭐ {tHoeemple.rating}</Text>
+      <Text style={styles.templeRating}>⭐ {temple.rating}</Text>
       <Text style={styles.description}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
         Praesent libero. Sed cursus ante dapibus diam.

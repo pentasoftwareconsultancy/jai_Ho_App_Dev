@@ -17,12 +17,19 @@ const BhajanAudioScreen = () => {
   const [selectedTab, setSelectedTab] = useState("Audios");
   const recentlyPlayed = [
     { id: "1", title: "Hanuman Chalisa", image: hanuman1 },
-    { id: "2", title: "Lorem ipsum dolor.....", image: hanuman2 },
+    { id: "2", title: "Shri Ram Stuti", image: hanuman2 },
+    { id: "3", title: "Sundarkand Path", image: hanuman3 },
+    { id: "4", title: "Bajrang Baan", image: hanuman4 },
+    { id: "5", title: "Shri Ram Aarti", image: hanuman5 },
+    { id: "6", title: "Shri Hanuman Ashtak", image: hanuman1 },
   ];
   const mostWatched = [
     { id: "1", title: "Hanuman Chalisa", image: hanuman3, liked: true },
-    { id: "2", title: "Hanuman Chalisa", image: hanuman4, liked: false },
-    { id: "3", title: "Hanuman Chalisa", image: hanuman5, liked: false },
+    { id: "2", title: "Jai Jai Ram", image: hanuman4, liked: false },
+    { id: "3", title: "Sankat Mochan Hanuman", image: hanuman5, liked: true },
+    { id: "4", title: "Ram Bhajan", image: hanuman1, liked: false },
+    { id: "5", title: "Jai Bajrangbali", image: hanuman2, liked: true },
+    { id: "6", title: "Ram Siya Ram", image: hanuman3, liked: false },
   ];
 
   return (
@@ -39,10 +46,10 @@ const BhajanAudioScreen = () => {
         {/* <Image source={profileImage} style={styles.profilePic} /> */}
       </View>
       {/* Search Bar */}
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <FontAwesome name="search" size={20} color="#888" style={styles.searchIcon} />
         <TextInput placeholder="Search" style={styles.searchInput} />
-      </View>
+      </View> */}
       {/* Category Tabs */}
       <View style={styles.tabs}>
         {["All", "Audios", "Videos"].map((tab) => (
@@ -103,7 +110,7 @@ const BhajanAudioScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F8F8F8" },
   header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", padding: 0.04 * width, top: 20 },
-  greeting: { fontSize: 18, fontWeight: "bold" },
+  greeting: { fontSize: 18, fontWeight: "bold",  },
   subtitle: { fontSize: 14, color: "#888" },
   profilePic: { width: 0.1 * width, height: 0.1 * width, borderRadius: 20 },
   searchContainer: {
@@ -120,15 +127,15 @@ const styles = StyleSheet.create({
   },
   searchIcon: { marginRight: 10 },
   searchInput: { flex: 1 },
-  tabs: { flexDirection: "row", justifyContent: "center", marginVertical: 10 },
+  tabs: { flexDirection: "row", justifyContent: "center", marginVertical: 10, marginTop: 40 },
   tabButton: { paddingVertical: 8, paddingHorizontal: 0.05 * width, borderWidth: 1, borderColor: "#888", borderRadius: 20, marginHorizontal: 6 },
   activeTab: { backgroundColor: "#FFA500", borderColor: "#FFA500" },
   tabText: { color: "#888", fontWeight: "bold" },
   activeTabText: { color: "white" },
   sectionHeader: { flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 16, marginTop: 10 },
-  sectionTitle: { fontSize: 16, fontWeight: "bold" },
+  sectionTitle: { fontSize: 16, fontWeight: "bold", },
   seeAll: { color: "#FFA500", fontWeight: "bold" },
-  recentItem: { marginRight: 16, alignItems: "center" },
+  recentItem: { marginRight: 20, alignItems: "center" },
   recentImage: { width: 0.25 * width, height: 0.25 * width, borderRadius: 10 },
   recentTitle: { fontSize: 14, marginTop: 5, fontWeight: "bold" },
   listItem: { flexDirection: "row", alignItems: "center", padding: 12, backgroundColor: "white", marginVertical: 6, borderRadius: 10, marginHorizontal: 16 },
