@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const DonationList = () => {
+const YStoreScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Our Donation Choices</Text>
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DonationList;
+export default YStoreScreen;

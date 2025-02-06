@@ -305,6 +305,38 @@ export default function SettingsScreen() {
                   </TouchableOpacity>
                 </View>
 
+                <View style={styles.rowWrapper}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      // handle gallery navigation or action
+                      navigation.navigate("ystore")
+                    }}
+                    style={styles.row}
+                  >
+                    <View
+                      style={[styles.rowIcon, { backgroundColor: '#FFA500' }]} // Change background color for gallery theme
+                    >
+                      <MaterialIcons
+                        color="#fff"
+                        name="attach-money" // Use the gallery icon name from Feather Icons
+                        size={20}
+                      />
+                    </View>
+
+                    <Text style={styles.rowLabel}>Y-Store</Text>
+
+                    <View style={styles.rowSpacer} />
+
+                    <Text style={styles.rowValue}>Y-Store</Text> {/* Optional, update as needed */}
+
+                    <FeatherIcon
+                      color="#C6C6C6"
+                      name="chevron-right"
+                      size={20}
+                    />
+                  </TouchableOpacity>
+                </View>
+
               </View>
             </View>
           </View>

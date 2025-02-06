@@ -1,147 +1,113 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, TextInput, FlatList, StyleSheet, Dimensions } from "react-native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-// Get screen dimensions
-const { width, height } = Dimensions.get("window");
+const data = [
+  { id: '1', title: 'Hanuman Chalisa', description: 'Lorem ipsum dolor...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '2', title: 'Lorem ipsum dolo', description: 'Lorem ipsum dolo...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '3', title: 'Aarti of Lord Ram', description: 'Aarti description here...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '4', title: 'Bhajan Collection', description: 'Various devotional bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '5', title: 'Shiva Stotra', description: 'Praise and prayer to Lord Shiva...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '6', title: 'Morning Mantras', description: 'Start your day with positive mantras...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '7', title: 'Divine Video', description: 'A divine video description...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '8', title: 'Temple Tour', description: 'A virtual tour of the temple...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '9', title: 'Yoga for Beginners', description: 'A beginner-friendly yoga video...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+];
 
-// Import local images
-import hanuman1 from '../../assets/images/templeimage.jpg';
-import hanuman2 from '../../assets/images/templeimage.jpg';
-import hanuman3 from '../../assets/images/templeimage.jpg';
-import hanuman4 from '../../assets/images/templeimage.jpg';
-import hanuman5 from '../../assets/images/templeimage.jpg';
-import profileImage from '../../assets/images/templeimage.jpg';
+export default function App() {
+  const [activeTab, setActiveTab] = useState('All');
+  const navigation = useNavigation();
 
-const BhajanAudioScreen = () => {
-  const [selectedTab, setSelectedTab] = useState("Audios");
-  const recentlyPlayed = [
-    { id: "1", title: "Hanuman Chalisa", image: hanuman1 },
-    { id: "2", title: "Shri Ram Stuti", image: hanuman2 },
-    { id: "3", title: "Sundarkand Path", image: hanuman3 },
-    { id: "4", title: "Bajrang Baan", image: hanuman4 },
-    { id: "5", title: "Shri Ram Aarti", image: hanuman5 },
-    { id: "6", title: "Shri Hanuman Ashtak", image: hanuman1 },
-  ];
-  const mostWatched = [
-    { id: "1", title: "Hanuman Chalisa", image: hanuman3, liked: true },
-    { id: "2", title: "Jai Jai Ram", image: hanuman4, liked: false },
-    { id: "3", title: "Sankat Mochan Hanuman", image: hanuman5, liked: true },
-    { id: "4", title: "Ram Bhajan", image: hanuman1, liked: false },
-    { id: "5", title: "Jai Bajrangbali", image: hanuman2, liked: true },
-    { id: "6", title: "Ram Siya Ram", image: hanuman3, liked: false },
-  ];
+  const handleTabChange = (tab) => setActiveTab(tab);
+
+  const filterData = (data) => {
+    if (activeTab === 'Audios') return data.filter(item => item.type === 'audio');
+    if (activeTab === 'Videos') return data.filter(item => item.type === 'video');
+    return data;
+  };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity>
-          <AntDesign name="arrowleft" size={24} color="#FF6E30" />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="orange" />
         </TouchableOpacity>
-        <View>
-          <Text style={styles.greeting}>Hi Dhiraj!</Text>
-          <Text style={styles.subtitle}>Good Morning!</Text>
-        </View>
-        {/* <Image source={profileImage} style={styles.profilePic} /> */}
       </View>
-      {/* Search Bar */}
-      {/* <View style={styles.searchContainer}>
-        <FontAwesome name="search" size={20} color="#888" style={styles.searchIcon} />
-        <TextInput placeholder="Search" style={styles.searchInput} />
-      </View> */}
-      {/* Category Tabs */}
-      <View style={styles.tabs}>
-        {["All", "Audios", "Videos"].map((tab) => (
+
+      <View style={styles.tabContainer}>
+        {['All', 'Audios', 'Videos'].map(tab => (
           <TouchableOpacity
             key={tab}
-            style={[styles.tabButton, selectedTab === tab && styles.activeTab]}
-            onPress={() => setSelectedTab(tab)}
+            style={[styles.tab, activeTab === tab && styles.activeTab]}
+            onPress={() => handleTabChange(tab)}
           >
-            <Text style={[styles.tabText, selectedTab === tab && styles.activeTabText]}>{tab}</Text>
+            <Text style={activeTab === tab ? styles.activeTabText : styles.tabText}>{tab}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      {/* Recently Played */}
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>RECENTLY PLAYED</Text>
-        <TouchableOpacity>
-          <Text style={styles.seeAll}>See All</Text>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={recentlyPlayed}
-        horizontal
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.recentItem}>
-            <Image source={item.image} style={styles.recentImage} />
-            <Text style={styles.recentTitle}>{item.title}</Text>
-          </View>
-        )}
-      />
-      {/* Most Watched */}
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>MOST WATCHED</Text>
-        <TouchableOpacity>
-          <Text style={styles.seeAll}>See All</Text>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={mostWatched}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.listItem}>
-            <Image source={item.image} style={styles.listImage} />
-            <View>
-              <Text style={styles.listTitle}>{item.title}</Text>
-              <Text style={styles.listSubtitle}>Lorem ipsum dolor ...</Text>
-            </View>
+
+      {activeTab === 'All' && (
+        <View>
+          <View style={styles.row}>
+            <Text style={styles.sectionTitle}>Recently Played</Text>
             <TouchableOpacity>
-              <FontAwesome name={item.liked ? "heart" : "heart-o"} size={20} color={item.liked ? "red" : "black"} />
+              <Text style={styles.seeAll}>See All</Text>
             </TouchableOpacity>
           </View>
+          <FlatList
+            data={filterData(data)}
+            renderItem={({ item }) => (
+              <View style={styles.card}>
+                <Image source={item.image} style={styles.cardImage} />
+                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.cardDescription}>{item.description}</Text>
+              </View>
+            )}
+            keyExtractor={(item) => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      )}
+
+      <View style={styles.row}>
+        <Text style={styles.sectionTitle}>Most Watched</Text>
+      </View>
+      <FlatList
+        data={activeTab === 'Audios' ? filterData(data) : filterData(data).slice(0, 5)}
+        renderItem={({ item }) => (
+          <View style={styles.mostWatchedItem}>
+            <Image source={item.image} style={styles.mostWatchedImage} />
+            <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardDescription}>{item.description}</Text>
+            </View>
+            <Ionicons name="heart-outline" size={24} color="black" />
+          </View>
         )}
+        keyExtractor={(item) => item.id}
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F8F8" },
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", padding: 0.04 * width, top: 20 },
-  greeting: { fontSize: 18, fontWeight: "bold",  },
-  subtitle: { fontSize: 14, color: "#888" },
-  profilePic: { width: 0.1 * width, height: 0.1 * width, borderRadius: 20 },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 10,
-    marginHorizontal: 0.04 * width,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  searchIcon: { marginRight: 10 },
-  searchInput: { flex: 1 },
-  tabs: { flexDirection: "row", justifyContent: "center", marginVertical: 10, marginTop: 40 },
-  tabButton: { paddingVertical: 8, paddingHorizontal: 0.05 * width, borderWidth: 1, borderColor: "#888", borderRadius: 20, marginHorizontal: 6 },
-  activeTab: { backgroundColor: "#FFA500", borderColor: "#FFA500" },
-  tabText: { color: "#888", fontWeight: "bold" },
-  activeTabText: { color: "white" },
-  sectionHeader: { flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 16, marginTop: 10 },
-  sectionTitle: { fontSize: 16, fontWeight: "bold", },
-  seeAll: { color: "#FFA500", fontWeight: "bold" },
-  recentItem: { marginRight: 20, alignItems: "center" },
-  recentImage: { width: 0.25 * width, height: 0.25 * width, borderRadius: 10 },
-  recentTitle: { fontSize: 14, marginTop: 5, fontWeight: "bold" },
-  listItem: { flexDirection: "row", alignItems: "center", padding: 12, backgroundColor: "white", marginVertical: 6, borderRadius: 10, marginHorizontal: 16 },
-  listImage: { width: 50, height: 50, borderRadius: 10, marginRight: 12 },
-  listTitle: { fontWeight: "bold", fontSize: 14 },
-  listSubtitle: { color: "#666" },
+  container: { flex: 1, backgroundColor: '#F6F6F6', padding: 20 },
+  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  tabContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 20 },
+  tab: { paddingVertical: 10, paddingHorizontal: 20, borderRadius: 20, backgroundColor: '#EAEAEA' },
+  activeTab: { backgroundColor: '#FF8500' },
+  tabText: { color: '#000' },
+  activeTabText: { color: '#FFF' },
+  sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
+  seeAll: { fontSize: 14, color: '#FF8500' },
+  card: { marginRight: 30, width: 140 },
+  cardImage: { width: 150, height: 150, borderRadius: 10, marginBottom: 5 },
+  cardTitle: { fontSize: 14, fontWeight: 'bold' },
+  cardDescription: { fontSize: 12, color: '#666' },
+  mostWatchedItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+  mostWatchedImage: { width: 70, height: 70, borderRadius: 10 },
+  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
 });
 
-export default BhajanAudioScreen;

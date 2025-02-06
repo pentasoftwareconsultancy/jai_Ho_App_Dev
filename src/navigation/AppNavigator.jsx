@@ -31,6 +31,7 @@ import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import GalleryDetails from "../screens/GalleryDetails";
 import SearchScreen from "../screens/SearchBarScreen/SearchScreen";
 import HanumanChalisaVideoScreen from "../screens/HanumanChalisaVideoScreen";
+import YStoreScreen from "../screens/YStoreScreen";
 
 
 const Stack = createStackNavigator();
@@ -53,9 +54,9 @@ const AppNavigator = () => {
 
       {/* Search Screen */}
       <Stack.Screen
-      name="Search"
-      component={SearchScreen}
-      options={{ headerShown: false }} // Hide header
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }} // Hide header
       />
 
       {/* Forgot Password Screen */}
@@ -67,15 +68,15 @@ const AppNavigator = () => {
 
       {/* Change Password Screen */}
       <Stack.Screen
-      name="ChangePassword"
-      component={ChangePasswordScreen}
-      options={{headerShown: false}} />
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+        options={{ headerShown: false }} />
 
       {/* Hanuman Chalisa video Screen */}
       <Stack.Screen
-      name="HanumanChalisaVideoScreen"
-      component={HanumanChalisaVideoScreen}
-      options={{headerShown: false}} />
+        name="HanumanChalisaVideoScreen"
+        component={HanumanChalisaVideoScreen}
+        options={{ headerShown: false }} />
 
 
       {/* OtpVerification Screen */}
@@ -186,8 +187,8 @@ const AppNavigator = () => {
         name="Gallery"
         component={Gallery} />
 
-        {/* Gallery Details Screen */}
-        <Stack.Screen
+      {/* Gallery Details Screen */}
+      <Stack.Screen
         name="GalleryDetails"
         component={GalleryDetails}
         options={{ headerShown: false }} />
@@ -203,7 +204,13 @@ const AppNavigator = () => {
 
       <Stack.Screen
         name="Donation"
-        component={DonationList} />
+        component={DonationList}
+        options={{ headerShown: false }} />
+
+      <Stack.Screen
+        name="ystore"
+        component={YStoreScreen}
+      />
 
 
 
