@@ -5,15 +5,26 @@ import { useNavigation } from '@react-navigation/native';
 
 const data = [
   { id: '1', title: 'Hanuman Chalisa', description: 'Lorem ipsum dolor...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
-  { id: '2', title: 'Lorem ipsum dolo', description: 'Lorem ipsum dolo...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '2', title: 'Morning Bhajans', description: 'Start your day with devotional bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
   { id: '3', title: 'Aarti of Lord Ram', description: 'Aarti description here...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
   { id: '4', title: 'Bhajan Collection', description: 'Various devotional bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
   { id: '5', title: 'Shiva Stotra', description: 'Praise and prayer to Lord Shiva...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
   { id: '6', title: 'Morning Mantras', description: 'Start your day with positive mantras...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
-  { id: '7', title: 'Divine Video', description: 'A divine video description...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
-  { id: '8', title: 'Temple Tour', description: 'A virtual tour of the temple...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
-  { id: '9', title: 'Yoga for Beginners', description: 'A beginner-friendly yoga video...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '7', title: 'Krishna Bhajans', description: 'Melodious Krishna bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '8', title: 'Durga Stuti', description: 'Devotional chant for Goddess Durga...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+  { id: '9', title: 'Ganesh Vandana', description: 'Prayer to Lord Ganesha...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+
+  { id: '10', title: 'Divine Video', description: 'A divine video description...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '11', title: 'Temple Tour', description: 'A virtual tour of the temple...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '12', title: 'Yoga for Beginners', description: 'A beginner-friendly yoga video...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '13', title: 'Mahabharat Stories', description: 'Ancient stories from Mahabharata...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '14', title: 'Ramayan Katha', description: 'A deep dive into Ramayana stories...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '15', title: 'Meditation Guide', description: 'Step-by-step guide to meditation...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '16', title: 'Shiv Tandav', description: 'Powerful Shiv Tandav Stotra...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '17', title: 'Festivals of India', description: 'Explore various Hindu festivals...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+  { id: '18', title: 'Spiritual Discourse', description: 'A discourse on spirituality...', type: 'video', image: require('../../assets/images/templeimage.jpg') }
 ];
+
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('All');
@@ -72,7 +83,9 @@ export default function App() {
       )}
 
       <View style={styles.row}>
-        <Text style={styles.sectionTitle}>Most Watched</Text>
+      <Text style={styles.sectionTitle}>
+    {activeTab === 'Audios' ? 'Audios' : activeTab === 'Videos' ? 'Videos' : 'Most Watched'}
+  </Text>
       </View>
       <FlatList
         data={activeTab === 'Audios' ? filterData(data) : filterData(data).slice(0, 5)}
@@ -87,6 +100,7 @@ export default function App() {
           </View>
         )}
         keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
