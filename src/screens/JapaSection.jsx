@@ -9,6 +9,8 @@ import {
   Alert,
 } from "react-native";
 
+import JaapImage from "../../assets/images/HanumanChalisaIcon.png"
+
 const JapaSection = () => {
   const [chantCount, setChantCount] = useState(11);
   const [currentCount, setCurrentCount] = useState(0);
@@ -20,7 +22,7 @@ const JapaSection = () => {
       id: "1",
       name: "Om Hanumate Namah",
       description: "Lorem ipsum dolor sit amet",
-      image: "https://via.placeholder.com/80",
+      image: JaapImage,
       rating: 4.9,
       duration: "6h 30min",
       favorite: false,
@@ -29,7 +31,7 @@ const JapaSection = () => {
       id: "2",
       name: "Om Shri Ram Jai Ram Jai Jai Ram",
       description: "Lorem ipsum dolor sit amet",
-      image: "https://via.placeholder.com/80",
+      image: JaapImage,
       rating: 4.8,
       duration: "4h 15min",
       favorite: true,

@@ -9,8 +9,7 @@ import ReadyToExplore from "../screens/ReadyToExplore";
 import BajansScreen from "../screens/BajansScreen";
 import JapaSection from "../screens/JapaSection";
 import MantraSection from "../screens/MantraSection";
-import TempleListScreen from "../screens/TempleListScreen";
-import TempleDetails from "../screens/TempleDetailsScreen"
+import TempleDetails from "../screens/TempleListScreen"
 import LearnHanumanChalisa from "../screens/LearnHanumanChalisa";
 import SelectDifficulty from "../screens/SelectDifficulty";
 import Testimonials from "../screens/Testimonials";
@@ -32,6 +31,9 @@ import GalleryDetails from "../screens/GalleryDetails";
 import SearchScreen from "../screens/SearchBarScreen/SearchScreen";
 import HanumanChalisaVideoScreen from "../screens/HanumanChalisaVideoScreen";
 import YStoreScreen from "../screens/YStoreScreen";
+import KathaDetailsScreen from "../screens/KathaDetailsScreen";
+// import CityWiseTempleDetails from "../screens/TempleDetails";
+import TempleCityListScreen from "../screens/TempleCityListScreen";
 
 
 const Stack = createStackNavigator();
@@ -150,7 +152,7 @@ const AppNavigator = () => {
       {/* Temple List Screen  */}
       <Stack.Screen
         name="Temples"
-        component={TempleListScreen}
+        component={TempleCityListScreen}
         options={{ headerShown: false }} />
 
       {/* TempleDetails Screen */}
@@ -158,6 +160,13 @@ const AppNavigator = () => {
         name="TempleDetails"
         component={TempleDetails}
         options={{ headerShown: false }} />
+
+        {/* City wise temple details */}
+        {/* <Stack.Screen
+        name="CityWiseTempleDetails"
+        component={CityWiseTempleDetails}
+        options={{ headerShown: false }} /> */}
+
 
       <Stack.Screen
         name="LearnHanumanChalisa"
@@ -211,6 +220,10 @@ const AppNavigator = () => {
         name="ystore"
         component={YStoreScreen}
       />
+
+      <Stack.Screen
+        name="KathaDetails"
+        component={KathaDetailsScreen} />
 
 
 

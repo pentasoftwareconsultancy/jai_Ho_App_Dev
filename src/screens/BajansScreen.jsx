@@ -13,7 +13,6 @@ const data = [
   { id: '7', title: 'Krishna Bhajans', description: 'Melodious Krishna bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
   { id: '8', title: 'Durga Stuti', description: 'Devotional chant for Goddess Durga...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
   { id: '9', title: 'Ganesh Vandana', description: 'Prayer to Lord Ganesha...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
-
   { id: '10', title: 'Divine Video', description: 'A divine video description...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
   { id: '11', title: 'Temple Tour', description: 'A virtual tour of the temple...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
   { id: '12', title: 'Yoga for Beginners', description: 'A beginner-friendly yoga video...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
@@ -25,7 +24,6 @@ const data = [
   { id: '18', title: 'Spiritual Discourse', description: 'A discourse on spirituality...', type: 'video', image: require('../../assets/images/templeimage.jpg') }
 ];
 
-
 export default function App() {
   const [activeTab, setActiveTab] = useState('All');
   const navigation = useNavigation();
@@ -36,6 +34,11 @@ export default function App() {
     if (activeTab === 'Audios') return data.filter(item => item.type === 'audio');
     if (activeTab === 'Videos') return data.filter(item => item.type === 'video');
     return data;
+  };
+
+  const handleCardPress = (item) => {
+    // Navigate to a detailed view or perform an action
+    navigation.navigate('MediaPlayer', { media: item });
   };
 
   return (
@@ -69,11 +72,13 @@ export default function App() {
           <FlatList
             data={filterData(data)}
             renderItem={({ item }) => (
-              <View style={styles.card}>
-                <Image source={item.image} style={styles.cardImage} />
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                <Text style={styles.cardDescription}>{item.description}</Text>
-              </View>
+              <TouchableOpacity onPress={() => handleCardPress(item)}>
+                <View style={styles.card}>
+                  <Image source={item.image} style={styles.cardImage} />
+                  <Text style={styles.cardTitle}>{item.title}</Text>
+                  <Text style={styles.cardDescription}>{item.description}</Text>
+                </View>
+              </TouchableOpacity>
             )}
             keyExtractor={(item) => item.id}
             horizontal
@@ -83,21 +88,23 @@ export default function App() {
       )}
 
       <View style={styles.row}>
-      <Text style={styles.sectionTitle}>
-    {activeTab === 'Audios' ? 'Audios' : activeTab === 'Videos' ? 'Videos' : 'Most Watched'}
-  </Text>
+        <Text style={styles.sectionTitle}>
+          {activeTab === 'Audios' ? 'Audios' : activeTab === 'Videos' ? 'Videos' : 'Most Watched'}
+        </Text>
       </View>
       <FlatList
         data={activeTab === 'Audios' ? filterData(data) : filterData(data).slice(0, 5)}
         renderItem={({ item }) => (
-          <View style={styles.mostWatchedItem}>
-            <Image source={item.image} style={styles.mostWatchedImage} />
-            <View style={{ flex: 1, marginLeft: 10 }}>
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardDescription}>{item.description}</Text>
+          <TouchableOpacity onPress={() => handleCardPress(item)}>
+            <View style={styles.mostWatchedItem}>
+              <Image source={item.image} style={styles.mostWatchedImage} />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.cardDescription}>{item.description}</Text>
+              </View>
+              <Ionicons name="heart-outline" size={24} color="black" />
             </View>
-            <Ionicons name="heart-outline" size={24} color="black" />
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
@@ -125,3 +132,30 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
 });
 
+
+
+
+
+
+
+// const data = [
+//   { id: '1', title: 'Hanuman Chalisa', description: 'Lorem ipsum dolor...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '2', title: 'Morning Bhajans', description: 'Start your day with devotional bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '3', title: 'Aarti of Lord Ram', description: 'Aarti description here...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '4', title: 'Bhajan Collection', description: 'Various devotional bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '5', title: 'Shiva Stotra', description: 'Praise and prayer to Lord Shiva...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '6', title: 'Morning Mantras', description: 'Start your day with positive mantras...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '7', title: 'Krishna Bhajans', description: 'Melodious Krishna bhajans...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '8', title: 'Durga Stuti', description: 'Devotional chant for Goddess Durga...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '9', title: 'Ganesh Vandana', description: 'Prayer to Lord Ganesha...', type: 'audio', image: require('../../assets/images/templeimage.jpg') },
+
+//   { id: '10', title: 'Divine Video', description: 'A divine video description...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '11', title: 'Temple Tour', description: 'A virtual tour of the temple...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '12', title: 'Yoga for Beginners', description: 'A beginner-friendly yoga video...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '13', title: 'Mahabharat Stories', description: 'Ancient stories from Mahabharata...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '14', title: 'Ramayan Katha', description: 'A deep dive into Ramayana stories...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '15', title: 'Meditation Guide', description: 'Step-by-step guide to meditation...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '16', title: 'Shiv Tandav', description: 'Powerful Shiv Tandav Stotra...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '17', title: 'Festivals of India', description: 'Explore various Hindu festivals...', type: 'video', image: require('../../assets/images/templeimage.jpg') },
+//   { id: '18', title: 'Spiritual Discourse', description: 'A discourse on spirituality...', type: 'video', image: require('../../assets/images/templeimage.jpg') }
+// ];
