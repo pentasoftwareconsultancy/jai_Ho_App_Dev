@@ -34,6 +34,7 @@ import YStoreScreen from "../screens/YStoreScreen";
 import KathaDetailsScreen from "../screens/KathaDetailsScreen";
 // import CityWiseTempleDetails from "../screens/TempleDetails";
 import TempleCityListScreen from "../screens/TempleCityListScreen";
+import MusicPlayerScreen from "../screens/MusicPlayerScreen";
 
 
 const Stack = createStackNavigator();
@@ -47,6 +48,9 @@ const AppNavigator = () => {
         component={BottomNavigator}
         options={{ headerShown: false }} // Hide header
       />
+
+
+
       {/* LoginSignup Screen */}
       <Stack.Screen
         name="LoginSignup"
@@ -161,8 +165,8 @@ const AppNavigator = () => {
         component={TempleDetails}
         options={{ headerShown: false }} />
 
-        {/* City wise temple details */}
-        {/* <Stack.Screen
+      {/* City wise temple details */}
+      {/* <Stack.Screen
         name="CityWiseTempleDetails"
         component={CityWiseTempleDetails}
         options={{ headerShown: false }} /> */}
@@ -205,7 +209,14 @@ const AppNavigator = () => {
 
       <Stack.Screen
         name="Music"
-        component={MusicSection} />
+        component={MusicSection}
+        options={{ headerShown: false }} />
+
+      {/* Music Player Screen */}
+      <Stack.Screen
+        name="MusicPlayerScreen"
+        component={MusicPlayerScreen}
+        options={{ headerShown: false }} />
 
       <Stack.Screen
         name="Proadcast"

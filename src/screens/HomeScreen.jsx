@@ -20,9 +20,10 @@ import templesIcon from "../../assets/images/HanumanChalisaIcon.png"
 import learnHanumanChalisaImage from "../../assets/images/HanumanChalisaIcon.png"
 import testimonyImage from "../../assets/images/HanumanChalisaIcon.png"
 
+
 const HomeScreen = ({ navigation }) => {
   const features = [
-    { name: "Bajan", icon: bajanIcon, route: "Bajan" },
+    { name: "Bajan", icon: bajanIcon, route: "Bajan", },
     { name: "Japa", icon: japaIcon, route: "Japa" },
     { name: "Mantra", icon: mantraIcon, route: "Mantra" },
     { name: "Hanuman Chalisa", icon: hanumanChalisaIcon, route: "HanumanChalisa" },
@@ -34,6 +35,7 @@ const HomeScreen = ({ navigation }) => {
   const otherFeatures = [
     { name: "Learn Hanuman Chalisa", image: learnHanumanChalisaImage, route: "LearnHanumanChalisa" },
     { name: "Testimony", image: testimonyImage, route: "Testimony" },
+    { name: "Music", image: null, route: "Music" },
   ];
 
   return (
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   otherFeatureCard: {
     marginRight: 20,
-    
+
 
   },
   otherFeatureImage: {
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     height: 230,
     borderRadius: 5,
     borderWidth: 0.5
-    
+
   },
   otherFeatureText: {
     marginTop: 10,

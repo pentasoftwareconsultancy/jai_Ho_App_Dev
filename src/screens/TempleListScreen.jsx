@@ -206,7 +206,7 @@ const TempleListScreen = ({ navigation, route }) => {
     }
     return temple.location.toLowerCase().includes(city.toLowerCase().trim());
   });
-  
+
 
   const renderTemple = ({ item }) => (
     <TouchableOpacity
@@ -238,28 +238,15 @@ const TempleListScreen = ({ navigation, route }) => {
     </TouchableOpacity>
   );
 
+  // **Added renderHeader function**
   const renderHeader = () => (
     <View style={styles.headerContainer}>
       <Text style={styles.headerText}>Temples in {city}</Text>
       <Text style={styles.subHeaderText}>
-        Find peace and spirituality in {city.split(",")[0]}
+        Find peace and spirituality in {city.split(',')[0]}
       </Text>
     </View>
   );
-
-  if (cityTemples.length === 0) {
-  return (
-    <View style={styles.container}>
-      {renderHeader()}
-      <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>No temples found in {city}.</Text>
-        <Text style={styles.suggestionText}>
-          Perhaps explore temples in nearby cities?
-        </Text>
-      </View>
-    </View>
-  );
-}
 
 
   return (
@@ -267,13 +254,13 @@ const TempleListScreen = ({ navigation, route }) => {
       <FlatList
         data={cityTemples}
         renderItem={renderTemple}
-        // keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id} // Uncommented
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
       />
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

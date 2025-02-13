@@ -1,147 +1,357 @@
-import React from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  Platform,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const MusicSection = () => {
-  const categories = [
-    { id: '1', name: 'Relax', image: require('../../assets/images/music.jpeg') },
-    { id: '2', name: 'Workout', image: require('../../assets/images/music.jpeg') },
-    { id: '3', name: 'Hanuman', image: require('../../assets/images/music.jpeg') },
-    { id: '4', name: 'Travel', image: require('../../assets/images/music.jpeg') },
+const { width, height } = Dimensions.get("window");
+
+const MusicDashboard = () => {
+  const [selectedTab, setSelectedTab] = useState("For you");
+  const navigation = useNavigation(); // Get the navigation object
+
+  const recentlyPlayed = [
+    { 
+      id: "1", 
+      title: "Bhajan", 
+      image: require("../../assets/images/hanuman.jpg")
+    },
+    { 
+      id: "2", 
+      title: "Bhajan", 
+      image: require("../../assets/images/hanuman.jpg")
+    },
+    { 
+      id: "3", 
+      title: "Bhajan", 
+      image: require("../../assets/images/hanuman.jpg")
+    },
+    { 
+      id: "4", 
+      title: "Bhajan", 
+      image: require("../../assets/images/hanuman.jpg")
+    },
   ];
 
-  const playlists = [
-    {
-      id: '1',
-      title: 'Peace',
-      subtitle: '22 songs',
-      image: require('../../assets/images/music.jpeg'),
-      songs: [
-        { id: '1', name: 'Weightless', artist: 'Marconi Union' },
-        { id: '2', name: 'Nothing It Can', artist: 'Helios' },
-        { id: '3', name: 'Small Memory', artist: 'Jon Hopkins' },
-        { id: '4', name: 'Close to Home', artist: 'Lyle Mays' },
-      ],
+  const mixesForYou = [
+    { 
+      id: "1", 
+      title: "Calvin Harris", 
+      image: require("../../assets/images/hanuman.jpg")
     },
-    {
-      id: '2',
-      title: 'Hanuman Aarti',
-      subtitle: '10 songs',
-      image: require('../../assets/images/music.jpeg'),
-      songs: [
-        { id: '1', name: 'Hanuman Chalisa', artist: 'Ritesh Mishra' },
-        { id: '2', name: 'Bajrang Baan', artist: 'Ritesh Mishra' },
-      ],
+    { 
+      id: "2", 
+      title: "A R Rahman", 
+      image: require("../../assets/images/hanuman.jpg")
+    },
+    { 
+      id: "3", 
+      title: "Maroon 5", 
+      image: require("../../assets/images/hanuman.jpg")
     },
   ];
 
-  const renderCategory = ({ item }) => (
-    <TouchableOpacity style={styles.category}>
-      <Image source={item.image} style={styles.categoryImage} />
-      <Text style={styles.categoryText}>{item.name}</Text>
+  const renderCard = ({ item }) => (
+    <TouchableOpacity 
+      style={styles.card} 
+      activeOpacity={0.7} 
+      onPress={() => navigation.navigate("MusicPlayerScreen", { songId: item.id })} // Navigate to MusicPlayerScreen
+    >
+      <Image
+        source={item.image}
+        style={[styles.cardImage, { width: width * 0.2, height: width * 0.2 }]}
+      />
+      <Text style={styles.cardTitle}>{item.title}</Text>
     </TouchableOpacity>
   );
 
-  const renderPlaylist = ({ item }) => (
-    <View style={styles.playlist}>
-      <Image source={item.image} style={styles.playlistImage} />
-      <View style={styles.playlistInfo}>
-        <Text style={styles.playlistTitle}>{item.title}</Text>
-        <Text style={styles.playlistSubtitle}>{item.subtitle}</Text>
-      </View>
-      <TouchableOpacity style={styles.playButton}>
-        <Text style={styles.playButtonText}>Play</Text>
-      </TouchableOpacity>
-    </View>
+  const renderMixCard = ({ item }) => (
+    <TouchableOpacity 
+      style={styles.mixCard} 
+      activeOpacity={0.7} 
+      onPress={() => navigation.navigate("MusicPlayerScreen", { songId: item.id })} // Navigate to MusicPlayerScreen
+    >
+      <Image
+        source={item.image}
+        style={[styles.mixImage, { width: width * 0.3, height: width * 0.3 }]}
+      />
+      <Text style={styles.mixTitle}>{item.title}</Text>
+    </TouchableOpacity>
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.greeting}>Hi Ram, Good Evening</Text>
-      <FlatList
-        data={categories}
-        renderItem={renderCategory}
-        keyExtractor={(item) => item.id}
-        horizontal
-        style={styles.categories}
-      />
-      <Text style={styles.sectionTitle}>Playlists</Text>
-      <FlatList
-        data={playlists}
-        renderItem={renderPlaylist}
-        keyExtractor={(item) => item.id}
-        style={styles.playlists}
-      />
-    </ScrollView>
+    <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.greeting}>👋 Hi Ram,</Text>
+          <Text style={styles.subtitle}>Good Evening</Text>
+        </View>
+        <View style={styles.headerRight}>
+          <TouchableOpacity>
+            <Image
+              source={require("../../assets/images/hanuman.jpg")}
+              style={styles.profilePic}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Navigation Tabs */}
+      <View style={styles.tabs}>
+        {["For you", "Relax", "Hanuman", "Ram A"].map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            style={[styles.tabButton, selectedTab === tab && styles.activeTab]}
+            onPress={() => setSelectedTab(tab)}
+          >
+            <Text style={[styles.tabText, selectedTab === tab && styles.activeTabText]}>
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Featuring Today */}
+        <Text style={styles.sectionTitle}>Featuring Today</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+            <Image
+              source={require("../../assets/images/hanuman.jpg")}
+              style={[styles.featuredImage, { width: width * 0.9, height: height * 0.15 }]}
+            />
+          </TouchableOpacity>
+          
+          <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+            <Image
+              source={require("../../assets/images/hanuman.jpg")}
+              style={[styles.featuredImage, { width: width * 0.9, height: height * 0.15 }]}
+            />
+          </TouchableOpacity>
+        </ScrollView>
+        
+        {/* Recently Played */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Recently Played</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See more</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={recentlyPlayed}
+          horizontal
+          keyExtractor={(item) => item.id}
+          renderItem={renderCard}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+        />
+
+        {/* Mixes For You */}
+        <Text style={styles.sectionTitle}>Mixes for you</Text>
+        <FlatList
+          data={mixesForYou}
+          horizontal
+          keyExtractor={(item) => item.id}
+          renderItem={renderMixCard}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+          style={styles.bottomPadding}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  // Your styles here...
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
+    backgroundColor: "#F8F8F8",
+    paddingTop: Platform.OS === 'ios' ? 50 : 40,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   greeting: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontWeight: "bold",
+    color: "#333",
   },
-  categories: {
-    marginBottom: 20,
-  },
-  category: {
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  categoryImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-  categoryText: {
-    marginTop: 5,
+  subtitle: {
     fontSize: 14,
+    color: "#666",
+    marginTop: 4,
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  iconButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: "#f0f0f0",
+  },
+  profilePic: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#fff",
+  },
+  tabs: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 12,
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  tabButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderBottomWidth: 2,
+    borderBottomColor: "transparent",
+  },
+  activeTab: {
+    borderBottomColor: "#007AFF",
+  },
+  tabText: {
+    fontSize: 15,
+    color: "#666",
+    fontWeight: "600",
+  },
+  activeTabText: {
+    color: "#007AFF",
+    fontWeight: "bold",
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+    marginLeft: 16,
+    marginTop: 20,
+    marginBottom: 12,
   },
-  playlists: {
-    marginBottom: 20,
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    marginTop: 20,
+    marginBottom: 12,
   },
-  playlist: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  playlistImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-  },
-  playlistInfo: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  playlistTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  playlistSubtitle: {
+  seeAll: {
     fontSize: 14,
-    color: '#666',
+    color: "#007AFF",
+    fontWeight: "600",
   },
-  playButton: {
-    backgroundColor: '#FFA500',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
+  featuredImage: {
+    borderRadius: 16,
+    alignSelf: "center",
+    marginHorizontal: 16,
+    marginVertical: 8,
+    backgroundColor: "#f0f0f0",
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
-  playButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+  listContent: {
+    paddingHorizontal: 12,
+  },
+  card: {
+    alignItems: "center",
+    marginHorizontal: 8,
+    padding: 4,
+  },
+  cardImage: {
+    borderRadius: 12,
+    backgroundColor: "#f0f0f0",
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  cardTitle: {
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333",
+    textAlign: "center",
+  },
+  mixCard: {
+    alignItems: "center",
+    marginHorizontal: 8,
+    padding: 4,
+  },
+  mixImage: {
+    borderRadius: 16,
+    backgroundColor: "#f0f0f0",
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  },
+  mixTitle: {
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333",
+    textAlign: "center",
+  },
+  bottomPadding: {
+    paddingBottom: 20,
   },
 });
 
-export default MusicSection;
+export default MusicDashboard;
