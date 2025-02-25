@@ -1,230 +1,364 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  Image,
-  Alert,
-} from "react-native";
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Animated, Dimensions, TouchableOpacity, Image, Easing } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import { Vibration } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { MaterialIcons } from '@expo/vector-icons';
 
-import JaapImage from "../../assets/images/HanumanChalisaIcon.png"
+const { width, height } = Dimensions.get('window');
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+const numbers = [1, 11, 21, 51, 101, 108];
 
 const JapaSection = () => {
-  const [chantCount, setChantCount] = useState(11);
-  const [currentCount, setCurrentCount] = useState(0);
-  const [mode, setMode] = useState("Sound"); // Options: Sound, Vibrate, Both
-  const [isJapaActive, setIsJapaActive] = useState(false);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
+  const [selectedNumber, setSelectedNumber] = useState(1);
+  const [enableSound, setEnableSound] = useState(true);
+  const [enableVibration, setEnableVibration] = useState(true);
+  const [sound, setSound] = useState(null);
+  const angleAnim = useRef(new Animated.Value(0)).current; // For small circle animation
 
-  const mantras = [
-    {
-      id: "1",
-      name: "Om Hanumate Namah",
-      description: "Lorem ipsum dolor sit amet",
-      image: JaapImage,
-      rating: 4.9,
-      duration: "6h 30min",
-      favorite: false,
-    },
-    {
-      id: "2",
-      name: "Om Shri Ram Jai Ram Jai Jai Ram",
-      description: "Lorem ipsum dolor sit amet",
-      image: JaapImage,
-      rating: 4.8,
-      duration: "4h 15min",
-      favorite: true,
-    },
-    // Add more mantras here
-  ];
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(angleAnim, {
+        toValue: 1, // From 0 to 1 (used for interpolation)
+        duration: 8000, // 8 seconds per full rotation
+        easing: Easing.linear, // Use easing from react-native
+        useNativeDriver: true,
+      })
+    ).start();
+  }, []);
 
-  const startJapa = () => {
-    if (!chantCount) {
-      Alert.alert("Select a chant count");
-      return;
-    }
-    setCurrentCount(0);
-    setIsJapaActive(true);
+  const radius = 80; // Radius of circular motion
+
+  // Interpolating rotation angle
+  const rotateInterpolation = angleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'], // Full rotation in degrees
+  });
+
+  // Define the animated style for the moving circle
+  const animatedStyle = {
+    transform: [
+      { rotate: rotateInterpolation }, // Rotating around the center
+      { translateX: radius }, // Shifting to circular path
+    ],
   };
 
-  const stopJapa = () => {
-    setIsJapaActive(false);
-  };
+  const renderItem = ({ item, index }) => {
+    const inputRange = [(index - 1) * 100, index * 100, (index + 1) * 100];
 
-  const toggleFavorite = (id) => {
-    const updatedMantras = mantras.map((mantra) =>
-      mantra.id === id ? { ...mantra, favorite: !mantra.favorite } : mantra
+    const scale = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.8, 1.5, 0.8],
+      extrapolate: 'clamp',
+    });
+
+    const opacity = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.3, 1, 0.3],
+      extrapolate: 'clamp',
+    });
+
+    return (
+      <View style={styles.numberContainer}>
+        <Animated.Text
+          style={{
+            ...styles.numberText,
+            fontSize: scale.interpolate({
+              inputRange: [0.8, 1.5],
+              outputRange: [14, 28],
+              extrapolate: 'clamp',
+            }),
+            opacity,
+            transform: [{ scale }],
+          }}
+        >
+          {item}
+        </Animated.Text>
+      </View>
     );
-    console.log(updatedMantras);
   };
 
-  const handleChant = () => {
-    if (currentCount < chantCount) {
-      setCurrentCount(currentCount + 1);
-    } else {
-      Alert.alert("Japa Complete!", "You have completed the selected chants.");
-      setIsJapaActive(false);
-    }
+  const handleScroll = (event) => {
+    const x = event.nativeEvent.contentOffset.x;
+    const index = Math.round(x / 100);
+    setSelectedNumber(numbers[index]);
+  };
+
+  const navigateToNextPage = () => {
+    navigation.navigate('CalAppScreen', { selectedNumber, enableSound, enableVibration });
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Om Hanumate Namah</Text>
-      <View style={styles.imageContainer}>
-        <Image
-          source={{
-            uri: "https://via.placeholder.com/150",
-          }}
-          style={styles.image}
+    <LinearGradient colors={['#FFFFF0', '#F8F8FF', '#FFFAFA']} style={styles.container}>
+      {/* Circular Image with Moving Small Circle */}
+      <View style={styles.circleImageContainer}>
+        {/* Main Circle Image */}
+        <Image source={require('../../assets/images/hanuman.jpg')} style={styles.circleImage} />
+
+        {/* Circular Path Line */}
+        <View style={styles.circularPath} />
+
+        {/* Small Moving Circle */}
+        <Animated.View style={[styles.smallCircle, animatedStyle]} />
+        
+      </View>
+
+      {/* Question Text */}
+      <Animatable.Text animation="fadeIn" style={styles.questionText}>
+        How many times do you want to chant?
+      </Animatable.Text>
+
+      {/* Ruler Container */}
+      <View style={styles.rulerContainer}>
+        <View style={styles.fixedLinesContainer}>
+          <View style={styles.line} />
+          <View style={styles.spacer} />
+          <View style={styles.line} />
+        </View>
+
+        <AnimatedFlatList
+          data={numbers}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={100}
+          decelerationRate="fast"
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false, listener: handleScroll }
+          )}
+          scrollEventThrottle={16}
+          contentContainerStyle={{ paddingHorizontal: width / 2 - 50 }}
         />
       </View>
-      <Text style={styles.subHeading}>How many times do you want to chant?</Text>
-      <View style={styles.counterContainer}>
-        {[11, 21, 54, 108].map((count) => (
-          <TouchableOpacity
-            key={count}
-            style={[
-              styles.countButton,
-              chantCount === count && styles.activeCountButton,
-            ]}
-            onPress={() => setChantCount(count)}
-          >
-            <Text
-              style={[
-                styles.countButtonText,
-                chantCount === count && styles.activeCountButtonText,
-              ]}
-            >
-              {count}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <View style={styles.modeContainer}>
-        {["Sound", "Vibrate", "Both"].map((item) => (
-          <TouchableOpacity
-            key={item}
-            style={[
-              styles.modeButton,
-              mode === item && styles.activeModeButton,
-            ]}
-            onPress={() => setMode(item)}
-          >
-            <Text
-              style={[
-                styles.modeButtonText,
-                mode === item && styles.activeModeButtonText,
-              ]}
-            >
-              {item}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <TouchableOpacity
-        style={styles.startButton}
-        onPress={isJapaActive ? stopJapa : startJapa}
-      >
-        <Text style={styles.startButtonText}>
-          {isJapaActive ? "Stop Japa" : "Start Japa"}
-        </Text>
-      </TouchableOpacity>
-      {isJapaActive && (
-        <TouchableOpacity
-          style={styles.chantButton}
-          onPress={handleChant}
+
+      {/* Selected Number */}
+      <Animatable.Text animation="pulse" iterationCount="infinite" style={styles.selectedNumber}>
+        Selected No of Mantras to Chant: {selectedNumber}
+      </Animatable.Text>
+
+      {/* Sound and Vibration Radio Buttons */}
+      <Animatable.View animation="fadeInUp" style={styles.radioButtonContainer}>
+        <LinearGradient
+          colors={['#FFFAFA', '#F8F8FF']}
+          style={styles.radioButtonGradient}
         >
-          <Text style={styles.chantButtonText}>
-            Chant Count: {currentCount}/{chantCount}
-          </Text>
-        </TouchableOpacity>
-      )}
-      <Text style={styles.listHeading}>Available Mantras</Text>
-      <FlatList
-        data={mantras}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.mantraItem}>
-            <Image source={{ uri: item.image }} style={styles.mantraImage} />
-            <View style={styles.mantraInfo}>
-              <Text style={styles.mantraName}>{item.name}</Text>
-              <Text style={styles.mantraDescription}>{item.description}</Text>
-              <Text style={styles.mantraRating}>⭐ {item.rating}</Text>
-            </View>
-            <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
-              <Text style={styles.favorite}> {item.favorite ? "❤️" : "🤍"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
-    </View>
+          <MaterialIcons name="volume-up" size={24} color="#C55A11" />
+          <Text style={styles.radioButtonText}>Enable Sound</Text>
+          <RadioButton
+            selectedValue={enableSound}
+            onValueChange={(value) => {
+              setEnableSound(value);
+              if (!value && sound) {
+                sound.stopAsync();
+              }
+            }}
+          />
+        </LinearGradient>
+      </Animatable.View>
+
+      <Animatable.View animation="fadeInUp" delay={200} style={styles.radioButtonContainer}>
+        <LinearGradient
+          colors={['#FFFAFA', '#F8F8FF']}
+          style={styles.radioButtonGradient}
+        >
+          <MaterialIcons name="vibration" size={24} color="#C55A11" />
+          <Text style={styles.radioButtonText}>Enable Vibration</Text>
+          <RadioButton
+            selectedValue={enableVibration}
+            onValueChange={(value) => {
+              setEnableVibration(value);
+              if (!value) {
+                Vibration.cancel();
+              }
+            }}
+          />
+        </LinearGradient>
+      </Animatable.View>
+
+      {/* Start Button */}
+      <TouchableOpacity style={styles.button} onPress={navigateToNextPage}>
+        <LinearGradient colors={['#FF7043', '#FFA500']} style={styles.buttonGradient}>
+          <Text style={styles.buttonText}>Start</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
 
-export default JapaSection;
+const RadioButton = ({ selectedValue, onValueChange }) => {
+  return (
+    <TouchableOpacity
+      style={radioStyles.optionContainer}
+      onPress={() => onValueChange(!selectedValue)}
+    >
+      <MaterialIcons
+        name={selectedValue ? 'radio-button-checked' : 'radio-button-unchecked'}
+        size={24}
+        color="#FF7043"
+      />
+      <Text style={radioStyles.optionLabel}>{selectedValue ? 'On' : 'Off'}</Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#fff" },
-  heading: { fontSize: 24, fontWeight: "bold", textAlign: "center" },
-  subHeading: { fontSize: 18, marginVertical: 10, textAlign: "center" },
-  imageContainer: { alignItems: "center", marginVertical: 20 },
-  image: { width: 150, height: 150, borderRadius: 75 },
-  counterContainer: { flexDirection: "row", justifyContent: "center", marginVertical: 10 },
-  countButton: {
-    marginHorizontal: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: "#ccc",
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  activeCountButton: { backgroundColor: "#ff9800", borderColor: "#ff9800" },
-  countButtonText: { fontSize: 16, color: "#333" },
-  activeCountButtonText: { color: "#fff" },
-  modeContainer: { flexDirection: "row", justifyContent: "center", marginVertical: 20 },
-  modeButton: {
-    marginHorizontal: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: "#ccc",
+  circleImageContainer: {
+    position: 'relative',
+    marginBottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  activeModeButton: { backgroundColor: "#ff9800", borderColor: "#ff9800" },
-  modeButtonText: { fontSize: 16, color: "#333" },
-  activeModeButtonText: { color: "#fff" },
-  startButton: {
-    backgroundColor: "#ff9800",
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: "center",
+  circleImage: {
+    width: 130,
+    height: 130,
+    borderRadius: 70,
+    borderWidth: 4,
+    borderColor: '#FF7043',
+    zIndex: 1,
+    shadowColor: '#FFD700',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  circularPath: {
+    position: 'absolute',
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    borderWidth: 2,
+    borderColor: '#FF7043',
+    borderStyle: 'solid',
+  },
+  smallCircle: {
+    position: 'absolute',
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#FF7043', 
+    zIndex: 2,
+  },
+  rulerContainer: {
+    height: 150,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  numberContainer: {
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  numberText: {
+    fontWeight: 'bold',
+    color: '#FF7043',
+    textShadowColor: 'rgba(255, 215, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+  },
+  fixedLinesContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -1 }, { translateY: -54 }],
+    zIndex: 1,
+    alignItems: 'center',
+  },
+  line: {
+    width: 2,
+    height: 30,
+    backgroundColor: '#FF7043',
+  },
+  spacer: {
+    height: 60,
+  },
+  selectedNumber: {
+    fontSize: 18,
+    color: '#FF7043',
+    marginVertical: 20,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(255, 215, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+  },
+  radioButtonContainer: {
+    width: '80%',
     marginVertical: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
-  startButtonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
-  chantButton: {
-    backgroundColor: "#4caf50",
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginVertical: 10,
+  radioButtonGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
   },
-  chantButtonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
-  listHeading: { fontSize: 20, fontWeight: "bold", marginTop: 20 },
-  mantraItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ccc",
+  radioButtonText: {
+    fontSize: 16,
+    color: '#FF7043',
+    fontFamily: 'serif',
+    marginLeft: 10,
   },
-  mantraImage: { width: 80, height: 80, borderRadius: 5, marginRight: 10 },
-  mantraInfo: { flex: 1 },
-  mantraName: { fontSize: 16, fontWeight: "bold" },
-  mantraDescription: { fontSize: 14, color: "#777" },
-  mantraRating: { fontSize: 14, color: "#ff9800" },
-  favorite: { fontSize: 18, marginHorizontal: 10 },
+  button: {
+    borderRadius: 25,
+    overflow: 'hidden',
+    marginTop: 20,
+  },
+  buttonGradient: {
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 25,
+  },
+  buttonText: {
+    color: '#1C1C2B',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  questionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FF7043',
+    textShadowColor: 'rgba(255, 215, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    fontFamily: 'serif',
+    marginBottom: 20,
+  },
 });
+
+const radioStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  optionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  optionLabel: {
+    fontSize: 16,
+    color: '#C55A11',
+    marginLeft: 5,
+  },
+});
+
+export default JapaSection;

@@ -154,9 +154,9 @@ export default function SettingsScreen() {
                       name="applemusic"
                       size={20} />
                   </View>
-                  <Text style={styles.rowLabel}>Proadcasts</Text>
+                  <Text style={styles.rowLabel}>Podcasts</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>Proadcasts</Text>
+                  <Text style={styles.rowValue}>Podcasts</Text>
                   <FeatherIcon
                     color="#C6C6C6"
                     name="chevron-right"
@@ -178,7 +178,6 @@ export default function SettingsScreen() {
                         name="at-sign"
                         size={20} />
                     </View>
-
                     <Text style={styles.rowLabel}>Email Notifications</Text>
 
                     <View style={styles.rowSpacer} />
@@ -190,7 +189,6 @@ export default function SettingsScreen() {
                       value={form.emailNotifications} />
                   </View>
                 </View>
-
                 <View style={styles.rowWrapper}>
                   <View style={styles.row}>
                     <View
@@ -202,9 +200,7 @@ export default function SettingsScreen() {
                     </View>
 
                     <Text style={styles.rowLabel}>Push Notifications</Text>
-
                     <View style={styles.rowSpacer} />
-
                     <Switch
                       onValueChange={pushNotifications =>
                         setForm({ ...form, pushNotifications })
@@ -212,7 +208,6 @@ export default function SettingsScreen() {
                       value={form.pushNotifications} />
                   </View>
                 </View>
-
                 <View style={styles.rowWrapper}>
                   <TouchableOpacity
                     onPress={() => {
@@ -227,20 +222,15 @@ export default function SettingsScreen() {
                         name="music"
                         size={20} />
                     </View>
-
                     <Text style={styles.rowLabel}>Music</Text>
-
                     <View style={styles.rowSpacer} />
-
                     <Text style={styles.rowValue}>Songs</Text>
-
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
                       size={20} />
                   </TouchableOpacity>
                 </View>
-
                 <View style={styles.rowWrapper}>
                   <TouchableOpacity
                     onPress={() => {
@@ -258,13 +248,9 @@ export default function SettingsScreen() {
                         size={20}
                       />
                     </View>
-
                     <Text style={styles.rowLabel}>Photo Gallery</Text>
-
                     <View style={styles.rowSpacer} />
-
                     <Text style={styles.rowValue}>My Albums</Text> {/* Optional, update as needed */}
-
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
@@ -272,7 +258,6 @@ export default function SettingsScreen() {
                     />
                   </TouchableOpacity>
                 </View>
-
                 <View style={styles.rowWrapper}>
                   <TouchableOpacity
                     onPress={() => {
@@ -290,11 +275,8 @@ export default function SettingsScreen() {
                         size={20}
                       />
                     </View>
-
                     <Text style={styles.rowLabel}>Donation</Text>
-
                     <View style={styles.rowSpacer} />
-
                     <Text style={styles.rowValue}>donation</Text> {/* Optional, update as needed */}
 
                     <FeatherIcon
@@ -322,13 +304,9 @@ export default function SettingsScreen() {
                         size={20}
                       />
                     </View>
-
                     <Text style={styles.rowLabel}>Y-Store</Text>
-
                     <View style={styles.rowSpacer} />
-
                     <Text style={styles.rowValue}>Y-Store</Text> {/* Optional, update as needed */}
-
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
@@ -337,6 +315,33 @@ export default function SettingsScreen() {
                   </TouchableOpacity>
                 </View>
 
+                <View style={styles.rowWrapper}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      // handle gallery navigation or action
+                      navigation.navigate("favourites")
+                    }}
+                    style={styles.row}
+                  >
+                    <View
+                      style={[styles.rowIcon, { backgroundColor: '#FFA500' }]} // Change background color for gallery theme
+                    >
+                      <MaterialIcons
+                        color="#fff"
+                        name="image" // Use the gallery icon name from Feather Icons
+                        size={20}
+                      />
+                    </View>
+                    <Text style={styles.rowLabel}>My Yuja Library</Text>
+                    <View style={styles.rowSpacer} />
+                    <Text style={styles.rowValue}>My Yuja Library</Text> {/* Optional, update as needed */}
+                    <FeatherIcon
+                      color="#C6C6C6"
+                      name="chevron-right"
+                      size={20}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>

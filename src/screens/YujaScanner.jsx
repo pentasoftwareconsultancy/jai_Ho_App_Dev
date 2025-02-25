@@ -5,17 +5,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  LinearGradient,
 } from "react-native";
 import { Camera } from "expo-camera";
 import QRCode from "react-native-qrcode-svg";
+import { LinearGradient as ExpoLinearGradient } from 'expo-linear-gradient';
 
 export default function YujaScanner() {
-  const [hasPermission, setHasPermission] = useState(false);  // Default to false
+  const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
 
   useEffect(() => {
-    // Request camera permission when component is mounted
     requestCameraPermission();
   }, []);
 
@@ -43,9 +44,15 @@ export default function YujaScanner() {
     }
   };
 
+  const Logo = () => (
+    <View style={styles.logoContainer}>
+      <Text style={styles.logoText}>☁️</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>My Yuja Scan</Text>
+      <Text style={styles.header}>PSS test</Text>
       {isCameraActive && hasPermission ? (
         <Camera
           style={styles.camera}
@@ -60,10 +67,24 @@ export default function YujaScanner() {
         </Camera>
       ) : (
         <>
-          <View style={styles.qrCodeContainer}>
-            <Text style={styles.userName}>Y</Text>
-            <QRCode value="https://your-app-link.com" size={150} />
-          </View>
+          <ExpoLinearGradient
+            colors={['#00F5A0', '#00D9F5', '#FF47ED']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradientContainer}
+          >
+            <View style={styles.qrCodeContainer}>
+              <QRCode
+                value="https://www.nexusctc.com/"
+                size={200}
+                logo={Logo}
+                logoSize={30}
+                logoBackgroundColor="white"
+                backgroundColor="white"
+                color="black"
+              />
+            </View>
+          </ExpoLinearGradient>
           <TouchableOpacity style={styles.scanButton} onPress={handleScanCode}>
             <Text style={styles.scanButtonText}>SCAN CODE</Text>
           </TouchableOpacity>
@@ -79,35 +100,44 @@ export default function YujaScanner() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     padding: 20,
     alignItems: "center",
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "white",
     marginBottom: 20,
   },
-  qrCodeContainer: {
+  gradientContainer: {
+    padding: 20,
+    borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#f3f3f3",
-    padding: 20,
-    borderRadius: 10,
+  },
+  qrCodeContainer: {
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 20,
     elevation: 2,
   },
-  userName: {
-    fontSize: 40,
-    fontWeight: "bold",
-    color: "#444",
-    marginBottom: 10,
+  logoContainer: {
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  logoText: {
+    fontSize: 20,
   },
   scanButton: {
     marginTop: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
     backgroundColor: "#6ec1e4",
-    borderRadius: 5,
+    borderRadius: 8,
     alignItems: "center",
   },
   scanButtonText: {
