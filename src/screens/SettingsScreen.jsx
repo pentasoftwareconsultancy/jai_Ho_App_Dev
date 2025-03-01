@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -14,6 +14,7 @@ import {
 import FeatherIcon from "react-native-vector-icons/Feather";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import * as Location from "expo-location";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
@@ -24,17 +25,42 @@ export default function SettingsScreen() {
     pushNotifications: false,
   });
 
+  const [city, setCity] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+
+  const requestLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    setHasPermission(status === "granted");
+  };
+
+  const fetchCurrentLocation = async () => {
+    if (!hasPermission) return;
+    setLoading(true);
+    try {
+      const { coords } = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.High,
+      });
+      const geocode = await Location.reverseGeocodeAsync(coords);
+      setCity(geocode[0]?.city || "Unknown");
+    } catch {
+      setCity("Error fetching location");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    requestLocationPermission();
+  }, []);
+
+  useEffect(() => {
+    if (hasPermission) fetchCurrentLocation();
+  }, [hasPermission]);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F5F5F7" }}>
       <View style={styles.container}>
-        {/* <View style={styles.header}>
-          <Text style={styles.headerTitle}>Settings</Text>
-
-          <Text style={styles.headerSubtitle}>
-            Lorem ipsum dolor sit amet consectetur.
-          </Text>
-        </View> */}
-
         <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
           <View style={styles.profile}>
             <Image
@@ -110,9 +136,7 @@ export default function SettingsScreen() {
 
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
-                  onPress={() => {
-                    // handle onPress
-                  }}
+                  onPress={fetchCurrentLocation}
                   style={styles.row}
                 >
                   <View
@@ -122,7 +146,9 @@ export default function SettingsScreen() {
                   </View>
                   <Text style={styles.rowLabel}>Location</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>Loading....</Text>
+                  <Text style={styles.rowValue}>
+                    {loading ? "Loading..." : city || "Unknown"}
+                  </Text>
                   <Feather name="refresh-cw" size={20} color="#888" />
                 </TouchableOpacity>
               </View>
@@ -147,153 +173,150 @@ export default function SettingsScreen() {
                 </TouchableOpacity>
               </View>
             </View>
+          </View>
 
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Notifications</Text>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Notifications</Text>
+            <View style={styles.sectionBody}>
+              <View style={styles.rowWrapper}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // handle onPress
+                    navigation.navigate("Music");
+                  }}
+                  style={styles.row}
+                >
+                  <View
+                    style={[styles.rowIcon, { backgroundColor: "#FE3C30" }]}
+                  >
+                    <FeatherIcon color="#fff" name="music" size={20} />
+                  </View>
+                  <Text style={styles.rowLabel}>Music</Text>
+                  <View style={styles.rowSpacer} />
+                  <Text style={styles.rowValue}>Songs</Text>
+                  <FeatherIcon
+                    color="#C6C6C6"
+                    name="chevron-right"
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.rowWrapper}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // handle gallery navigation or action
+                    navigation.navigate("Gallery");
+                  }}
+                  style={styles.row}
+                >
+                  <View
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
+                  >
+                    <FeatherIcon
+                      color="#fff"
+                      name="image" // Use the gallery icon name from Feather Icons
+                      size={20}
+                    />
+                  </View>
+                  <Text style={styles.rowLabel}>Photo Gallery</Text>
+                  <View style={styles.rowSpacer} />
+                  <Text style={styles.rowValue}>My Albums</Text>{" "}
+                  {/* Optional, update as needed */}
+                  <FeatherIcon
+                    color="#C6C6C6"
+                    name="chevron-right"
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.rowWrapper}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // handle gallery navigation or action
+                    navigation.navigate("Donation");
+                  }}
+                  style={styles.row}
+                >
+                  <View
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
+                  >
+                    <MaterialIcons
+                      color="#fff"
+                      name="attach-money" // Use the gallery icon name from Feather Icons
+                      size={20}
+                    />
+                  </View>
+                  <Text style={styles.rowLabel}>Donation</Text>
+                  <View style={styles.rowSpacer} />
+                  <Text style={styles.rowValue}>donation</Text>{" "}
+                  {/* Optional, update as needed */}
+                  <FeatherIcon
+                    color="#C6C6C6"
+                    name="chevron-right"
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
 
-              <View style={styles.sectionBody}>
-                <View style={styles.rowWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle onPress
-                      navigation.navigate("Music");
-                    }}
-                    style={styles.row}
+              <View style={styles.rowWrapper}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // handle gallery navigation or action
+                    navigation.navigate("ystore");
+                  }}
+                  style={styles.row}
+                >
+                  <View
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
                   >
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FE3C30" }]}
-                    >
-                      <FeatherIcon color="#fff" name="music" size={20} />
-                    </View>
-                    <Text style={styles.rowLabel}>Music</Text>
-                    <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>Songs</Text>
-                    <FeatherIcon
-                      color="#C6C6C6"
-                      name="chevron-right"
+                    <MaterialIcons
+                      color="#fff"
+                      name="attach-money" // Use the gallery icon name from Feather Icons
                       size={20}
                     />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.rowWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle gallery navigation or action
-                      navigation.navigate("Gallery");
-                    }}
-                    style={styles.row}
-                  >
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
-                    >
-                      <FeatherIcon
-                        color="#fff"
-                        name="image" // Use the gallery icon name from Feather Icons
-                        size={20}
-                      />
-                    </View>
-                    <Text style={styles.rowLabel}>Photo Gallery</Text>
-                    <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>My Albums</Text>{" "}
-                    {/* Optional, update as needed */}
-                    <FeatherIcon
-                      color="#C6C6C6"
-                      name="chevron-right"
-                      size={20}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.rowWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle gallery navigation or action
-                      navigation.navigate("Donation");
-                    }}
-                    style={styles.row}
-                  >
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
-                    >
-                      <MaterialIcons
-                        color="#fff"
-                        name="attach-money" // Use the gallery icon name from Feather Icons
-                        size={20}
-                      />
-                    </View>
-                    <Text style={styles.rowLabel}>Donation</Text>
-                    <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>donation</Text>{" "}
-                    {/* Optional, update as needed */}
-                    <FeatherIcon
-                      color="#C6C6C6"
-                      name="chevron-right"
-                      size={20}
-                    />
-                  </TouchableOpacity>
-                </View>
+                  </View>
+                  <Text style={styles.rowLabel}>Y-Store</Text>
+                  <View style={styles.rowSpacer} />
+                  <Text style={styles.rowValue}>Y-Store</Text>{" "}
+                  {/* Optional, update as needed */}
+                  <FeatherIcon
+                    color="#C6C6C6"
+                    name="chevron-right"
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
 
-                <View style={styles.rowWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle gallery navigation or action
-                      navigation.navigate("ystore");
-                    }}
-                    style={styles.row}
+              <View style={styles.rowWrapper}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // handle gallery navigation or action
+                    navigation.navigate("favourites");
+                  }}
+                  style={styles.row}
+                >
+                  <View
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
                   >
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
-                    >
-                      <MaterialIcons
-                        color="#fff"
-                        name="attach-money" // Use the gallery icon name from Feather Icons
-                        size={20}
-                      />
-                    </View>
-                    <Text style={styles.rowLabel}>Y-Store</Text>
-                    <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>Y-Store</Text>{" "}
-                    {/* Optional, update as needed */}
-                    <FeatherIcon
-                      color="#C6C6C6"
-                      name="chevron-right"
+                    <MaterialIcons
+                      color="#fff"
+                      name="image" // Use the gallery icon name from Feather Icons
                       size={20}
                     />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.rowWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle gallery navigation or action
-                      navigation.navigate("favourites");
-                    }}
-                    style={styles.row}
-                  >
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
-                    >
-                      <MaterialIcons
-                        color="#fff"
-                        name="image" // Use the gallery icon name from Feather Icons
-                        size={20}
-                      />
-                    </View>
-                    <Text style={styles.rowLabel}>My Yuja Library</Text>
-                    <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>My Yuja Library</Text>{" "}
-                    {/* Optional, update as needed */}
-                    <FeatherIcon
-                      color="#C6C6C6"
-                      name="chevron-right"
-                      size={20}
-                    />
-                  </TouchableOpacity>
-                </View>
+                  </View>
+                  <Text style={styles.rowLabel}>My Yuja Library</Text>
+                  <View style={styles.rowSpacer} />
+                  <Text style={styles.rowValue}>My Yuja Library</Text>{" "}
+                  {/* Optional, update as needed */}
+                  <FeatherIcon
+                    color="#C6C6C6"
+                    name="chevron-right"
+                    size={20}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
-
-          {/* <Text style={styles.contentFooter}>Made with ❤️ in Seattle</Text> */}
         </ScrollView>
       </View>
     </SafeAreaView>
