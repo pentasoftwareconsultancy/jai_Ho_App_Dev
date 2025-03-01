@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   scrollContent: {
-    paddingBottom: 20,
+    paddingBottom: 80,
   },
   sectionTitle: {
     fontSize: 20,

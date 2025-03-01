@@ -104,8 +104,9 @@ const AllVideoPodcasts = () => {
 
   return (
     <LinearGradient
-      colors={["#FFF3E0", "#FFE0B2"]} // Light saffron gradient
+      colors={["#F5F5F7", "#F5F5F7"]} // Light saffron gradient
       style={styles.container}
+      
     >
       {/* Podcast List */}
       <FlatList
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     padding: 16,
+    paddingBottom: 80
   },
   podcastCard: {
     flexDirection: "row",
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
   podcastTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#4A2C00", // Deep maroon
+    color: "#1C1C1E", // Deep maroon
     lineHeight: 24,
     fontFamily: "Georgia",
   },

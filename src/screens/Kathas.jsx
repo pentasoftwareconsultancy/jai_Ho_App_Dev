@@ -130,8 +130,6 @@ const Kathas = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hi {userName}!</Text>
-        <Text style={styles.subGreeting}>Good Morning!</Text>
         <TextInput
           placeholder="Search"
           style={styles.searchBar}
@@ -168,7 +166,6 @@ const styles = StyleSheet.create({
   greeting: { fontSize: 24, fontWeight: "bold", color: "#FF8C00" },
   subGreeting: { fontSize: 16, color: "#555" },
   searchBar: {
-    marginTop: 10,
     backgroundColor: "#f2f2f2",
     borderRadius: 10,
     padding: 10,
@@ -191,7 +188,7 @@ const styles = StyleSheet.create({
   featuredTime: { marginLeft: 5, color: "#555" },
   featuredAuthor: { marginLeft: 15, color: "#555" },
   sectionTitle: { fontSize: 20, fontWeight: "bold", marginHorizontal: 20, marginTop: 10 },
-  kathasList: { paddingHorizontal: 20 },
+  kathasList: { paddingHorizontal: 20, paddingBottom:100 },
   kathaCard: {
     flexDirection: "row",
     backgroundColor: "#FFF",

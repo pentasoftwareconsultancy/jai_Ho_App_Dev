@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions, TouchableOpacity, Image, Easing } from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions, TouchableOpacity, Image, Easing, ScrollView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -94,7 +94,8 @@ const JapaSection = () => {
   };
 
   return (
-    <LinearGradient colors={['#FFFFF0', '#F8F8FF', '#FFFAFA']} style={styles.container}>
+    <ScrollView contentContainerStyle={{paddingBottom:120, paddingTop:30}}>
+        <LinearGradient colors={['#F5F5F7', '#F5F5F7', '#F5F5F7']} style={styles.container}>
       {/* Circular Image with Moving Small Circle */}
       <View style={styles.circleImageContainer}>
         {/* Main Circle Image */}
@@ -189,6 +190,8 @@ const JapaSection = () => {
         </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
+    </ScrollView>
+    
   );
 };
 
@@ -200,7 +203,7 @@ const RadioButton = ({ selectedValue, onValueChange }) => {
     >
       <MaterialIcons
         name={selectedValue ? 'radio-button-checked' : 'radio-button-unchecked'}
-        size={24}
+        size={22}
         color="#FF7043"
       />
       <Text style={radioStyles.optionLabel}>{selectedValue ? 'On' : 'Off'}</Text>

@@ -57,15 +57,6 @@ const TempleSecondScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topSection}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{temple.name}</Text>
-        <TouchableOpacity>
-          <FontAwesome name="user-circle" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
@@ -86,13 +77,14 @@ const TempleSecondScreen = ({ route, navigation }) => {
         numColumns={2}
         columnWrapperStyle={styles.row}
         renderItem={renderTempleCard}
+        contentContainerStyle={{paddingBottom:80}}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F8F8", paddingTop: 40 },
+  container: { flex: 1, backgroundColor: "#F8F8F8", paddingTop: 10 },
   topSection: {
     flexDirection: "row",
     justifyContent: "space-between",

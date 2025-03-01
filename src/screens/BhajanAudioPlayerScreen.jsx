@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   Animated,
   Image,
-  Easing, // Added for rotating circle animation
+  Easing,
 } from "react-native";
 import { Audio } from "expo-av";
 import { AntDesign } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
-import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
+import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 
-const AudioPodcastPlayer = () => {
+const BhajanAudioPlayerScreen = () => {
   const route = useRoute();
-  const { podcast } = route.params; // Podcast data from AllAudioPodcasts
+  const { media } = route.params; // Bhajan data from navigation
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0); // Current position in milliseconds
@@ -29,7 +29,7 @@ const AudioPodcastPlayer = () => {
   useEffect(() => {
     const loadSound = async () => {
       const { sound: audioSound } = await Audio.Sound.createAsync(
-        { uri: podcast.audioUrl || "https://example.com/default-audio.mp3" } // Replace with actual audio URL
+        { uri: media.audioUrl || "https://example.com/default-audio.mp3" } // Replace with actual audio URL
       );
       setSound(audioSound);
 
@@ -73,7 +73,7 @@ const AudioPodcastPlayer = () => {
         sound.unloadAsync();
       }
     };
-  }, [podcast]);
+  }, [media]);
 
   const rotateInterpolation = angleAnim.interpolate({
     inputRange: [0, 1],
@@ -130,17 +130,13 @@ const AudioPodcastPlayer = () => {
       <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
         {/* Image with Rotating Circle (Same as CalAppScreen) */}
         <View style={styles.circleImageContainer}>
-          <Image
-            source={require("../../assets/images/hanuman.jpg")}
-            style={styles.podcastImage}
-          />
+          <Image source={media.image} style={styles.podcastImage} />
           <View style={styles.circularPath} />
           <Animated.View style={[styles.smallCircle, animatedStyle]} />
         </View>
 
         {/* Podcast Info */}
-        <Text style={styles.title}>{podcast.title}</Text>
-        <Text style={styles.author}>{podcast.author}</Text>
+        <Text style={styles.title}>{media.title}</Text>
 
         {/* Progress Slider */}
         <View style={styles.progressContainer}>
@@ -177,11 +173,6 @@ const AudioPodcastPlayer = () => {
             <AntDesign name="stepforward" size={30} color="#FFD700" />
           </TouchableOpacity>
         </View>
-
-        {/* Additional Info */}
-        <Text style={styles.metaText}>
-          {podcast.listens} • {podcast.daysAgo}
-        </Text>
       </Animated.View>
     </View>
   );
@@ -190,10 +181,18 @@ const AudioPodcastPlayer = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F7", // Subtle saffron-cream background
+    backgroundColor: "#F5F5F7", 
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 80
+  },
+  backButton: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: "#FFA726",
   },
   content: {
     alignItems: "center",
@@ -238,18 +237,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#1C1C1E",
+    color: "#4A2C00",
     textAlign: "center",
     marginBottom: 10,
     textShadowColor: "rgba(255, 215, 0, 0.3)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
-  },
-  author: {
-    fontSize: 18,
-    color: "#666",
-    marginBottom: 20,
-    fontWeight: "500",
+    marginTop:20,
+    marginBottom:20
   },
   progressContainer: {
     flexDirection: "row",
@@ -283,11 +278,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
   },
-  metaText: {
-    fontSize: 14,
-    color: "#666",
-    opacity: 0.8,
-  },
 });
 
-export default AudioPodcastPlayer;
+export default BhajanAudioPlayerScreen;

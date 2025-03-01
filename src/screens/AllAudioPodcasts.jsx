@@ -131,10 +131,11 @@ const AllAudioPodcasts = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF3E0", // Subtle saffron-cream for divine feel
+    backgroundColor: "#F5F5F7", // Subtle saffron-cream for divine feel
   },
   listContainer: {
-    padding: 20,
+    padding: 20,  
+    paddingBottom:80
   },
   podcastCard: {
     backgroundColor: "#FFFFFF",
@@ -167,12 +168,12 @@ const styles = StyleSheet.create({
   podcastTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#4A2C00", // Deep brown for grounding
+    color: "#1C1C1E", // Deep brown for grounding
     lineHeight: 24,
   },
   podcastDetails: {
     fontSize: 14,
-    color: "#FF5722", // Vibrant saffron-orange for energy
+    color: "#666", // Vibrant saffron-orange for energy
     marginTop: 4,
     fontWeight: "500",
   },

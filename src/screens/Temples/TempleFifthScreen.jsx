@@ -1,23 +1,18 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const TempleFifthScreen = ({ route, navigation }) => {
-  const { temple } = route.params; // Get the temple data from params
+  const { temple,firstImage } = route.params; // Get the temple data from params
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
       
       {/* Temple Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: temple.image }} // Use the temple image passed from the previous screen
+          source={firstImage} // Use the temple image passed from the previous screen
           style={styles.templeImage}
         />
         <Text style={styles.locationText}>{temple.location}</Text>
@@ -59,10 +54,16 @@ const TempleFifthScreen = ({ route, navigation }) => {
         <Text style={styles.bookButtonText}>Book Now</Text>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
+    
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#F8F8F8",
+  },
   container: { flex: 1, backgroundColor: "#F8F8F8" },
   header: { flexDirection: "row", alignItems: "center", padding: 15 },
   imageContainer: { alignItems: "center", position: "relative" },

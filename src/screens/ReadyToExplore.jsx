@@ -1,10 +1,15 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const ReadyToExplore = ({ navigation }) => {
+const ReadyToExplore = () => {
+  const navigation = useNavigation();
   const handleBackToLogin = () => {
     // Navigate back to the login screen
-    navigation.navigate("Home"); // Adjust the route name to match your navigation setup
+    navigation.reset({
+      index:0,
+      routes:[{name:"Main"}]
+    }); // Adjust the route name to match your navigation setup
   };
 
   return (

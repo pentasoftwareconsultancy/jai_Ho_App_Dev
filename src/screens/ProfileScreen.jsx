@@ -75,9 +75,6 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          <Text style={styles.backText}>{"<"}</Text>
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>Hi Ram Sharma!</Text>
         <Image
           source={{

@@ -96,7 +96,6 @@ export default function YujaLibrary() {
         renderItem={renderImage}
         keyExtractor={(item) => item.id}
         horizontal
-        showsHorizontalScrollIndicator={false}
       />
     </View>
   );

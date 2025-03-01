@@ -22,13 +22,6 @@ const TempleThirdScreen = ({ route, navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="white" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>{temple.name}</Text>
-            </View>
 
             {/* Temple Image Carousel */}
             <View style={styles.carouselContainer}>

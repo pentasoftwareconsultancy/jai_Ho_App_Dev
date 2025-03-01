@@ -332,7 +332,8 @@ const PodcastSection = () => {
       data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator={false} 
+      contentContainerStyle={{ paddingBottom: 80 }}
     />
   );
 };
@@ -340,7 +341,7 @@ const PodcastSection = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF3E0", // Light saffron-tinted cream
+    backgroundColor: "#F5F5F7", // Light saffron-tinted cream
     padding: 16,
   },
   header: {
@@ -393,13 +394,18 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   tab: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 30,
-    backgroundColor: "#FFE0B2", // Light saffron beige
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginRight: 12,
+    borderRadius: 20,
+    backgroundColor: "#F5F5F7",
     borderWidth: 1,
-    borderColor: "#FF5722",
-    marginHorizontal: 8, // Adds spacing between tabs
+    borderColor: "#F5F5F7",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   activeTab: {
     backgroundColor: "#FF5722",
@@ -410,7 +416,7 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   tabText: {
-    color: "#BF360C",
+    color: "#1C1C1E",
     fontWeight: "600",
     fontSize: 14,
   },
@@ -429,13 +435,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#FF5722",
+    color: "#1C1C1E",
     textTransform: "uppercase",
     letterSpacing: 1,
   },
   seeAllText: {
     fontSize: 16,
-    color: "#FF5722",
+    color: "#1C1C1E",
     fontWeight: "600",
     textDecorationLine: "underline",
   },

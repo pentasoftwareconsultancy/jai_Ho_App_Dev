@@ -40,11 +40,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       {/* Scrollable Content */}
-      <ScrollView style={styles.container}>
-        {/* Greeting Section */}
-        <View style={styles.header}>
-          <Text style={styles.greeting}>Hi Dhiraj! Good Morning!</Text>
-        </View>
+      <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 110 }}  >
 
         {/* Main Features */}
         <View style={styles.featuresGrid}>
@@ -110,8 +106,9 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F5F5F7",
     padding: 20,
+    
   },
   header: {
     marginBottom: 20,
@@ -167,8 +164,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   otherFeatureImage: {
-    width: 260,
-    height: 230,
+    width: 200,
+    height: 180,
     borderRadius: 5,
     borderWidth: 0.5,
   },

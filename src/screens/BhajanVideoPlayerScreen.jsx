@@ -21,7 +21,7 @@ const relatedVideos = [
     title: "Hanuman's Role in Ramayana",
     author: "Mythology Expert",
     views: "98,456 views",
-    image: "https://example.com/podcast2.jpg",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwoi7erJezs-ikxW4V_Xii24_4J7lRxwgyZg&s",
     duration: "45:32",
     videoUri: "https://example.com/video1.mp4", // Ignored in favor of fixed URI
     description: "Discover the pivotal role of Lord Hanuman in the epic Ramayana.",
@@ -31,21 +31,21 @@ const relatedVideos = [
     title: "Exploring Famous Hanuman Temples",
     author: "Travel Enthusiast",
     views: "50,123 views",
-    image: "https://example.com/podcast4.jpg",
+    image: "https://www.thesmartshoppee.com/cdn/shop/articles/Shopify_Square_13.png?v=1723816946",
     duration: "38:15",
     videoUri: "https://example.com/video2.mp4", // Ignored in favor of fixed URI
     description: "A journey through famous Hanuman temples across India.",
   },
 ];
 
-const VideoPodcastPlayer = () => {
+const BhajanVideoPlayerScreen = () => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const route = useRoute();
   const navigation = useNavigation();
 
-  // Extract podcast data from route params
-  const podcast = route.params?.podcast || {};
+  // Extract media data from route params
+  const media = route.params?.media || {};
 
   const handlePlayPause = async () => {
     if (videoRef.current) {
@@ -59,9 +59,9 @@ const VideoPodcastPlayer = () => {
   };
 
   // Function to handle navigation to a related video
-  const handleRelatedVideoPress = (relatedPodcast) => {
-    // Pass the related podcast data but override videoUri in the player
-    navigation.push("VideoPodcastPlayer", { podcast: relatedPodcast });
+  const handleRelatedVideoPress = (relatedMedia) => {
+    // Pass the related media data but override videoUri in the player
+    navigation.push("BhajanVideoPlayerScreen", { media: relatedMedia });
   };
 
   return (
@@ -70,7 +70,7 @@ const VideoPodcastPlayer = () => {
       <View style={styles.videoContainer}>
         <Video
           ref={videoRef}
-          // Always use this fixed URI regardless of podcast.videoUri
+          // Always use this fixed URI regardless of media.videoUri
           source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }}
           style={styles.video}
           resizeMode="cover"
@@ -86,17 +86,17 @@ const VideoPodcastPlayer = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Podcast Details */}
+      {/* Media Details */}
       <ScrollView style={styles.detailsContainer}>
-        <Text style={styles.title}>{podcast.title || "Hanuman's Role in Ramayana"}</Text>
+        <Text style={styles.title}>{media.title || "Hanuman's Role in Ramayana"}</Text>
         <Text style={styles.author}>
-          {podcast.author || "Mythology Expert"} • {podcast.views || "98,456 views"}
+          {media.author || "Mythology Expert"} • {media.views || "98,456 views"}
         </Text>
         <Text style={styles.duration}>
-          Duration: {podcast.duration || "45:32"}
+          Duration: {media.duration || "45:32"}
         </Text>
         <Text style={styles.description}>
-          {podcast.description ||
+          {media.description ||
             "Discover the pivotal role of Lord Hanuman in the epic Ramayana. Learn about his devotion, strength, and unwavering loyalty to Lord Rama."}
         </Text>
 
@@ -131,7 +131,7 @@ const VideoPodcastPlayer = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    paddingBottom:80,
   },
   videoContainer: {
     width: "100%",
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#1C1C1E",
+    color: "#4A2C00",
     fontFamily: "Georgia",
     marginBottom: 8,
   },
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   relatedTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#1C1C1E",
+    color: "#4A2C00",
     fontFamily: "Georgia",
     marginBottom: 16,
   },
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   relatedTitleText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#1C1C1E",
+    color: "#4A2C00",
     fontFamily: "Georgia",
     lineHeight: 18,
   },
@@ -210,8 +210,8 @@ const styles = StyleSheet.create({
     fontFamily: "Arial",
   },
   relatedList: {
-    paddingBottom: 120,
+    paddingBottom: 80,
   },
 });
 
-export default VideoPodcastPlayer;
+export default BhajanVideoPlayerScreen;

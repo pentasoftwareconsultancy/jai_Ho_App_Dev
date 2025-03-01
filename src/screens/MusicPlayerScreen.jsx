@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 80
   },
   topControls: { 
     flexDirection: "row",
@@ -146,8 +147,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   albumArt: {
-    width: 350,
-    height: 400,
+    width: 150,
+    height: 200,
     borderRadius: 10,
     marginTop: 20,
     borderWidth:1,

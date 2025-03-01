@@ -63,16 +63,6 @@ const TempleFirstScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Top Section */}
-      <View style={styles.topSection}>
-        <TouchableOpacity>
-          <Ionicons name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Good Morning!</Text>
-        <TouchableOpacity>
-          <FontAwesome name="user-circle" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
@@ -101,23 +91,14 @@ const TempleFirstScreen = ({ navigation }) => {
             <Text style={styles.cardTitle}>{item.name}</Text>
           </TouchableOpacity>
         )}
+        contentContainerStyle={{paddingBottom:100}}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F8F8", paddingTop: 40 },
-  topSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    backgroundColor: "#FFA500",
-    paddingVertical: 15,
-  },
-  headerTitle: { fontSize: 18, fontWeight: "bold", color: "white" },
+  container: { flex: 1, backgroundColor: "#F8F8F8", paddingTop: 10 },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",

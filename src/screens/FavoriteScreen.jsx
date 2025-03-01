@@ -128,7 +128,7 @@ const FavoriteScreen = () => {
         keyExtractor={item => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.horizontalList}
+        contentContainerStyle={{paddingBottom:100}}
       />
     </ScrollView>
   );

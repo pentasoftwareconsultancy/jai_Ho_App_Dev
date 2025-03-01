@@ -1,5 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,13 +10,12 @@ import {
   TouchableOpacity,
   Switch,
   Image,
-} from 'react-native';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+} from "react-native";
+import FeatherIcon from "react-native-vector-icons/Feather";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export default function SettingsScreen() {
-
   const navigation = useNavigation();
 
   const [form, setForm] = useState({
@@ -25,7 +25,7 @@ export default function SettingsScreen() {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F5F5F7" }}>
       <View style={styles.container}>
         {/* <View style={styles.header}>
           <Text style={styles.headerTitle}>Settings</Text>
@@ -35,14 +35,15 @@ export default function SettingsScreen() {
           </Text>
         </View> */}
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
           <View style={styles.profile}>
             <Image
               alt=""
               source={{
-                uri: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
+                uri: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80",
               }}
-              style={styles.profileAvatar} />
+              style={styles.profileAvatar}
+            />
 
             <Text style={styles.profileName}>John Doe</Text>
 
@@ -51,7 +52,8 @@ export default function SettingsScreen() {
             <TouchableOpacity
               onPress={() => {
                 // handle onPress
-              }}>
+              }}
+            >
               <View style={styles.profileAction}>
                 <Text style={styles.profileActionText}>Edit Profile</Text>
 
@@ -64,19 +66,17 @@ export default function SettingsScreen() {
             <Text style={styles.sectionTitle}>Preferences</Text>
 
             <View style={styles.sectionBody}>
-
               <View style={[styles.rowWrapper, styles.rowFirst]}>
                 <TouchableOpacity
                   onPress={() => {
                     // handle onPress
                   }}
-                  style={styles.row}>
+                  style={styles.row}
+                >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: '#fe9400' }]}>
-                    <FeatherIcon
-                      color="#fff"
-                      name="globe"
-                      size={20} />
+                    style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}
+                  >
+                    <FeatherIcon color="#fff" name="globe" size={20} />
                   </View>
 
                   <Text style={styles.rowLabel}>Language</Text>
@@ -85,58 +85,45 @@ export default function SettingsScreen() {
 
                   <Text style={styles.rowValue}>English</Text>
 
-                  <FeatherIcon
-                    color="#C6C6C6"
-                    name="chevron-right"
-                    size={20} />
+                  <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
                 </TouchableOpacity>
               </View>
 
               <View style={styles.rowWrapper}>
                 <View style={styles.row}>
                   <View
-                    style={[styles.rowIcon, { backgroundColor: '#007AFF' }]}>
-                    <FeatherIcon
-                      color="#fff"
-                      name="moon"
-                      size={20} />
+                    style={[styles.rowIcon, { backgroundColor: "#007AFF" }]}
+                  >
+                    <FeatherIcon color="#fff" name="moon" size={20} />
                   </View>
 
                   <Text style={styles.rowLabel}>Dark Mode</Text>
 
-
                   <View style={styles.rowSpacer} />
 
                   <Switch
-                    onValueChange={darkMode => setForm({ ...form, darkMode })}
-                    value={form.darkMode} />
+                    onValueChange={(darkMode) => setForm({ ...form, darkMode })}
+                    value={form.darkMode}
+                  />
                 </View>
-
-
               </View>
-
-
 
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
                     // handle onPress
                   }}
-                  style={styles.row}>
+                  style={styles.row}
+                >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: '#32c759' }]}>
-                    <FeatherIcon
-                      color="#fff"
-                      name="navigation"
-                      size={20} />
+                    style={[styles.rowIcon, { backgroundColor: "#32c759" }]}
+                  >
+                    <FeatherIcon color="#fff" name="navigation" size={20} />
                   </View>
                   <Text style={styles.rowLabel}>Location</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>Los Angeles, CA</Text>
-                  <FeatherIcon
-                    color="#C6C6C6"
-                    name="chevron-right"
-                    size={20} />
+                  <Text style={styles.rowValue}>Loading....</Text>
+                  <Feather name="refresh-cw" size={20} color="#888" />
                 </TouchableOpacity>
               </View>
 
@@ -144,23 +131,19 @@ export default function SettingsScreen() {
                 <TouchableOpacity
                   onPress={() => {
                     // handle onPress
-                    navigation.navigate("Proadcast")
+                    navigation.navigate("Podcast");
                   }}
-                  style={styles.row}>
+                  style={styles.row}
+                >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: '#32c759' }]}>
-                    <Fontisto
-                      color="#fff"
-                      name="applemusic"
-                      size={20} />
+                    style={[styles.rowIcon, { backgroundColor: "#32c759" }]}
+                  >
+                    <Fontisto color="#fff" name="applemusic" size={20} />
                   </View>
                   <Text style={styles.rowLabel}>Podcasts</Text>
                   <View style={styles.rowSpacer} />
                   <Text style={styles.rowValue}>Podcasts</Text>
-                  <FeatherIcon
-                    color="#C6C6C6"
-                    name="chevron-right"
-                    size={20} />
+                  <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -169,58 +152,18 @@ export default function SettingsScreen() {
               <Text style={styles.sectionTitle}>Notifications</Text>
 
               <View style={styles.sectionBody}>
-                <View style={[styles.rowWrapper, styles.rowFirst]}>
-                  <View style={styles.row}>
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: '#38C959' }]}>
-                      <FeatherIcon
-                        color="#fff"
-                        name="at-sign"
-                        size={20} />
-                    </View>
-                    <Text style={styles.rowLabel}>Email Notifications</Text>
-
-                    <View style={styles.rowSpacer} />
-
-                    <Switch
-                      onValueChange={emailNotifications =>
-                        setForm({ ...form, emailNotifications })
-                      }
-                      value={form.emailNotifications} />
-                  </View>
-                </View>
-                <View style={styles.rowWrapper}>
-                  <View style={styles.row}>
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: '#38C959' }]}>
-                      <FeatherIcon
-                        color="#fff"
-                        name="bell"
-                        size={20} />
-                    </View>
-
-                    <Text style={styles.rowLabel}>Push Notifications</Text>
-                    <View style={styles.rowSpacer} />
-                    <Switch
-                      onValueChange={pushNotifications =>
-                        setForm({ ...form, pushNotifications })
-                      }
-                      value={form.pushNotifications} />
-                  </View>
-                </View>
                 <View style={styles.rowWrapper}>
                   <TouchableOpacity
                     onPress={() => {
                       // handle onPress
-                      navigation.navigate("Music")
+                      navigation.navigate("Music");
                     }}
-                    style={styles.row}>
+                    style={styles.row}
+                  >
                     <View
-                      style={[styles.rowIcon, { backgroundColor: '#FE3C30' }]}>
-                      <FeatherIcon
-                        color="#fff"
-                        name="music"
-                        size={20} />
+                      style={[styles.rowIcon, { backgroundColor: "#FE3C30" }]}
+                    >
+                      <FeatherIcon color="#fff" name="music" size={20} />
                     </View>
                     <Text style={styles.rowLabel}>Music</Text>
                     <View style={styles.rowSpacer} />
@@ -228,19 +171,20 @@ export default function SettingsScreen() {
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
-                      size={20} />
+                      size={20}
+                    />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.rowWrapper}>
                   <TouchableOpacity
                     onPress={() => {
                       // handle gallery navigation or action
-                      navigation.navigate("Gallery")
+                      navigation.navigate("Gallery");
                     }}
                     style={styles.row}
                   >
                     <View
-                      style={[styles.rowIcon, { backgroundColor: '#FFA500' }]} // Change background color for gallery theme
+                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
                     >
                       <FeatherIcon
                         color="#fff"
@@ -250,7 +194,8 @@ export default function SettingsScreen() {
                     </View>
                     <Text style={styles.rowLabel}>Photo Gallery</Text>
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>My Albums</Text> {/* Optional, update as needed */}
+                    <Text style={styles.rowValue}>My Albums</Text>{" "}
+                    {/* Optional, update as needed */}
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
@@ -262,12 +207,12 @@ export default function SettingsScreen() {
                   <TouchableOpacity
                     onPress={() => {
                       // handle gallery navigation or action
-                      navigation.navigate("Donation")
+                      navigation.navigate("Donation");
                     }}
                     style={styles.row}
                   >
                     <View
-                      style={[styles.rowIcon, { backgroundColor: '#FFA500' }]} // Change background color for gallery theme
+                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
                     >
                       <MaterialIcons
                         color="#fff"
@@ -277,8 +222,8 @@ export default function SettingsScreen() {
                     </View>
                     <Text style={styles.rowLabel}>Donation</Text>
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>donation</Text> {/* Optional, update as needed */}
-
+                    <Text style={styles.rowValue}>donation</Text>{" "}
+                    {/* Optional, update as needed */}
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
@@ -291,12 +236,12 @@ export default function SettingsScreen() {
                   <TouchableOpacity
                     onPress={() => {
                       // handle gallery navigation or action
-                      navigation.navigate("ystore")
+                      navigation.navigate("ystore");
                     }}
                     style={styles.row}
                   >
                     <View
-                      style={[styles.rowIcon, { backgroundColor: '#FFA500' }]} // Change background color for gallery theme
+                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
                     >
                       <MaterialIcons
                         color="#fff"
@@ -306,7 +251,8 @@ export default function SettingsScreen() {
                     </View>
                     <Text style={styles.rowLabel}>Y-Store</Text>
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>Y-Store</Text> {/* Optional, update as needed */}
+                    <Text style={styles.rowValue}>Y-Store</Text>{" "}
+                    {/* Optional, update as needed */}
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
@@ -319,12 +265,12 @@ export default function SettingsScreen() {
                   <TouchableOpacity
                     onPress={() => {
                       // handle gallery navigation or action
-                      navigation.navigate("favourites")
+                      navigation.navigate("favourites");
                     }}
                     style={styles.row}
                   >
                     <View
-                      style={[styles.rowIcon, { backgroundColor: '#FFA500' }]} // Change background color for gallery theme
+                      style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
                     >
                       <MaterialIcons
                         color="#fff"
@@ -334,7 +280,8 @@ export default function SettingsScreen() {
                     </View>
                     <Text style={styles.rowLabel}>My Yuja Library</Text>
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>My Yuja Library</Text> {/* Optional, update as needed */}
+                    <Text style={styles.rowValue}>My Yuja Library</Text>{" "}
+                    {/* Optional, update as needed */}
                     <FeatherIcon
                       color="#C6C6C6"
                       name="chevron-right"
@@ -364,9 +311,9 @@ const styles = StyleSheet.create({
   contentFooter: {
     marginTop: 24,
     fontSize: 13,
-    fontWeight: '500',
-    color: '#929292',
-    textAlign: 'center',
+    fontWeight: "500",
+    color: "#929292",
+    textAlign: "center",
   },
   /** Header */
   header: {
@@ -375,24 +322,24 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 32,
-    fontWeight: '700',
-    color: '#1d1d1d',
+    fontWeight: "700",
+    color: "#1d1d1d",
   },
   headerSubtitle: {
     fontSize: 15,
-    fontWeight: '500',
-    color: '#929292',
+    fontWeight: "500",
+    color: "#929292",
     marginTop: 6,
   },
   /** Profile */
   profile: {
     padding: 16,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fff",
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#e3e3e3',
+    borderColor: "#e3e3e3",
   },
   profileAvatar: {
     width: 60,
@@ -402,30 +349,30 @@ const styles = StyleSheet.create({
   profileName: {
     marginTop: 12,
     fontSize: 20,
-    fontWeight: '600',
-    color: '#090909',
+    fontWeight: "600",
+    color: "#090909",
   },
   profileEmail: {
     marginTop: 6,
     fontSize: 16,
-    fontWeight: '400',
-    color: '#848484',
+    fontWeight: "400",
+    color: "#848484",
   },
   profileAction: {
     marginTop: 12,
     paddingVertical: 10,
     paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#007bff',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#007bff",
     borderRadius: 12,
   },
   profileActionText: {
     marginRight: 8,
     fontSize: 15,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
   },
   /** Section */
   section: {
@@ -435,29 +382,29 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 24,
     fontSize: 14,
-    fontWeight: '600',
-    color: '#a7a7a7',
-    textTransform: 'uppercase',
+    fontWeight: "600",
+    color: "#a7a7a7",
+    textTransform: "uppercase",
     letterSpacing: 1.2,
   },
   sectionBody: {
     paddingLeft: 24,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#e3e3e3',
+    borderColor: "#e3e3e3",
   },
   /** Row */
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
     paddingRight: 16,
     height: 50,
   },
   rowWrapper: {
     borderTopWidth: 1,
-    borderColor: '#e3e3e3',
+    borderColor: "#e3e3e3",
   },
   rowFirst: {
     borderTopWidth: 0,
@@ -466,14 +413,14 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 12,
   },
   rowLabel: {
     fontSize: 17,
-    fontWeight: '500',
-    color: '#000',
+    fontWeight: "500",
+    color: "#000",
   },
   rowSpacer: {
     flexGrow: 1,
@@ -482,8 +429,8 @@ const styles = StyleSheet.create({
   },
   rowValue: {
     fontSize: 17,
-    fontWeight: '500',
-    color: '#8B8B8B',
+    fontWeight: "500",
+    color: "#8B8B8B",
     marginRight: 4,
   },
 });
