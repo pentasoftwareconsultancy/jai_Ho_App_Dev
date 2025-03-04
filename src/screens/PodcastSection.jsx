@@ -28,6 +28,7 @@ const podcasts = [
     duration: "45:32",
     videoUrl: "https://youtu.be/LUx8wlA_dk8?si=et7-dgiVAWXI-APW", // Direct URL
     description: "Discover the pivotal role of Lord Hanuman in the epic Ramayana.",
+    
   },
   {
     id: "2",
@@ -38,6 +39,7 @@ const podcasts = [
     type: "video",
     image: "https://example.com/podcast2.jpg",
     category: "Hanuman",
+    videoId: "jSzV92tg6as",
   },
   {
     id: "3",
@@ -48,6 +50,7 @@ const podcasts = [
     type: "audio",
     image: "https://example.com/podcast3.jpg",
     category: "Hanuman",
+    
   },
   {
     id: "4",
@@ -58,6 +61,7 @@ const podcasts = [
     type: "video",
     image: "https://example.com/podcast4.jpg",
     category: "Hanuman",
+    videoId: "jSzV92tg6as",
   },
   {
     id: "5",
@@ -68,6 +72,7 @@ const podcasts = [
     type: "audio",
     image: "https://example.com/podcast5.jpg",
     category: "Hanuman",
+    
   },
   {
     id: "6",
@@ -78,6 +83,7 @@ const podcasts = [
     type: "audio",
     image: "https://example.com/podcast6.jpg",
     category: "Neem Karoli Baba",
+    
   },
   {
     id: "7",
@@ -88,6 +94,7 @@ const podcasts = [
     type: "video",
     image: "https://example.com/podcast7.jpg",
     category: "Neem Karoli Baba",
+    videoId: "jSzV92tg6as",
   },
   {
     id: "8",
@@ -98,6 +105,7 @@ const podcasts = [
     type: "audio",
     image: "https://example.com/podcast8.jpg",
     category: "Motivation",
+    
   },
   {
     id: "9",
@@ -108,6 +116,7 @@ const podcasts = [
     type: "video",
     image: "https://example.com/podcast9.jpg",
     category: "Motivation",
+    videoId: "jSzV92tg6as",
   },
   {
     id: "10",
@@ -118,6 +127,7 @@ const podcasts = [
     type: "audio",
     image: "https://example.com/podcast10.jpg",
     category: "Hanuman",
+    
   },
   {
     id: "11",
@@ -128,6 +138,7 @@ const podcasts = [
     type: "video",
     image: "https://example.com/podcast11.jpg",
     category: "Hanuman",
+    videoId: "jSzV92tg6as",
   },
   {
     id: "12",
@@ -138,6 +149,7 @@ const podcasts = [
     type: "audio",
     image: "https://example.com/podcast12.jpg",
     category: "Neem Karoli Baba",
+    
   },
 ];
 

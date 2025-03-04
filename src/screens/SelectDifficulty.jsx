@@ -7,11 +7,6 @@ const SelectDifficulty = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backText}>{"< Back"}</Text>
-      </TouchableOpacity>
-      <Text style={styles.greeting}>Hi Dhiraj!</Text>
-      <Text style={styles.subText}>Good Morning!</Text>
       <Text style={styles.title}>Select Your {"\n"}Level of Difficulty</Text>
       <View style={styles.levelContainer}>
         {levels.map((level, index) => (
@@ -39,41 +34,13 @@ const SelectDifficulty = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  // Add your styles here (same as the styles in the original file for SelectDifficulty)
   container: {
     flex: 1,
     backgroundColor: "#F9F9F9",
     padding: 20,
   },
-  backButton: {
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-  },
-  backText: {
-    fontSize: 16,
-    color: "#FFA500",
-    fontWeight: "bold",
-  },
-  greeting: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 5,
-  },
-  subText: {
-    fontSize: 18,
-    color: "#555",
-    marginBottom: 20,
-  },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#333",
     textAlign: "center",
@@ -81,8 +48,7 @@ const styles = StyleSheet.create({
   },
   levelContainer: {
     flex: 1,
-    justifyContent: "space-between",
-    marginBottom: 20,
+    justifyContent: "flex-start",
   },
   levelButton: {
     backgroundColor: "#FFF",
@@ -117,6 +83,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: "center",
+    marginBottom: 100,
   },
   beginButtonText: {
     fontSize: 16,

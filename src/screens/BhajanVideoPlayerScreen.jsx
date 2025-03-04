@@ -1,18 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  Image,
   ScrollView,
+  TouchableOpacity,
   FlatList,
-  Dimensions,
+  Image,
 } from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { Video } from "expo-av";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 // Dummy Related Videos Data
 const relatedVideos = [
@@ -20,197 +18,228 @@ const relatedVideos = [
     id: "1",
     title: "Hanuman's Role in Ramayana",
     author: "Mythology Expert",
-    views: "98,456 views",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwoi7erJezs-ikxW4V_Xii24_4J7lRxwgyZg&s",
+    views: "98K views",
+    image: "https://t4.ftcdn.net/jpg/08/06/64/31/360_F_806643198_bYkGQLBf3BS7KGY4cr0WEt9CTN1qS0WQ.jpg",
     duration: "45:32",
-    videoUri: "https://example.com/video1.mp4", // Ignored in favor of fixed URI
+    videoId: "jSzV92tg6as",
     description: "Discover the pivotal role of Lord Hanuman in the epic Ramayana.",
   },
   {
     id: "2",
     title: "Exploring Famous Hanuman Temples",
     author: "Travel Enthusiast",
-    views: "50,123 views",
-    image: "https://www.thesmartshoppee.com/cdn/shop/articles/Shopify_Square_13.png?v=1723816946",
+    views: "50K views",
+    image: "https://images3.alphacoders.com/134/1346432.png",
     duration: "38:15",
-    videoUri: "https://example.com/video2.mp4", // Ignored in favor of fixed URI
+    videoId: "tgbNymZ7vqY",
     description: "A journey through famous Hanuman temples across India.",
   },
 ];
 
 const BhajanVideoPlayerScreen = () => {
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
   const route = useRoute();
   const navigation = useNavigation();
+  const { media } = route.params; // Access the passed media object
 
-  // Extract media data from route params
-  const media = route.params?.media || {};
+  const [playing, setPlaying] = useState(false);
+  const [showPlayButton, setShowPlayButton] = useState(true);
+  const timeoutRef = useRef(null);
 
-  const handlePlayPause = async () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        await videoRef.current.pauseAsync();
-      } else {
-        await videoRef.current.playAsync();
-      }
-      setIsPlaying(!isPlaying);
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      alert("Video has finished playing!");
     }
+  }, []);
+
+  const togglePlaying = () => {
+    setPlaying((prev) => !prev);
+    setShowPlayButton(true); // Show play button when user interacts
+    resetTimeout();
   };
 
-  // Function to handle navigation to a related video
-  const handleRelatedVideoPress = (relatedMedia) => {
-    // Pass the related media data but override videoUri in the player
-    navigation.push("BhajanVideoPlayerScreen", { media: relatedMedia });
+  const resetTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setShowPlayButton(false);
+    }, 3000); // Hide play button after 3 seconds
   };
+
+  useEffect(() => {
+    resetTimeout();
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [playing]);
 
   return (
-    <LinearGradient colors={["#F5F5F7", "#F5F5F7"]} style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {/* Video Player Section */}
       <View style={styles.videoContainer}>
-        <Video
-          ref={videoRef}
-          // Always use this fixed URI regardless of media.videoUri
-          source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }}
-          style={styles.video}
-          resizeMode="cover"
-          shouldPlay={isPlaying}
-          useNativeControls
+        <YoutubePlayer
+          height={200}
+          play={playing}
+          videoId={media.videoId}
+          onChangeState={onStateChange}
         />
-        <TouchableOpacity onPress={handlePlayPause} style={styles.playButton}>
-          <Ionicons
-            name={isPlaying ? "pause" : "play"}
-            size={40}
-            color="#FFFFFF"
-          />
-        </TouchableOpacity>
+        {showPlayButton && (
+          <TouchableOpacity onPress={togglePlaying} style={styles.playButton}>
+            <Ionicons
+              name={playing ? "pause" : "play"}
+              size={30}
+              color="#FFF"
+            />
+          </TouchableOpacity>
+        )}
       </View>
 
-      {/* Media Details */}
-      <ScrollView style={styles.detailsContainer}>
-        <Text style={styles.title}>{media.title || "Hanuman's Role in Ramayana"}</Text>
-        <Text style={styles.author}>
-          {media.author || "Mythology Expert"} • {media.views || "98,456 views"}
-        </Text>
-        <Text style={styles.duration}>
-          Duration: {media.duration || "45:32"}
-        </Text>
-        <Text style={styles.description}>
-          {media.description ||
-            "Discover the pivotal role of Lord Hanuman in the epic Ramayana. Learn about his devotion, strength, and unwavering loyalty to Lord Rama."}
-        </Text>
+      {/* Video Details Section */}
+      <View style={styles.detailsContainer}>
+        <Text style={styles.title}>{media.title}</Text>
+        <Text style={styles.views}>100K views • 1 day ago</Text>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionButton}>
+            <Ionicons name="thumbs-up" size={20} color="#666" />
+            <Text style={styles.actionText}>Like</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton}>
+            <Ionicons name="thumbs-down" size={20} color="#666" />
+            <Text style={styles.actionText}>Dislike</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton}>
+            <Ionicons name="share-social" size={20} color="#666" />
+            <Text style={styles.actionText}>Share</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton}>
+            <Ionicons name="bookmark" size={20} color="#666" />
+            <Text style={styles.actionText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.description}>{media.description}</Text>
+      </View>
 
-        {/* Related Videos Section */}
-        <Text style={styles.relatedTitle}>Related Videos</Text>
-        <FlatList
-          data={relatedVideos}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.relatedVideoCard}
-              onPress={() => handleRelatedVideoPress(item)}
-            >
-              <Image source={{ uri: item.image }} style={styles.relatedImage} />
-              <Text style={styles.relatedTitleText} numberOfLines={2}>
-                {item.title}
-              </Text>
-              <Text style={styles.relatedDetails}>
-                {item.author} • {item.views}
-              </Text>
-            </TouchableOpacity>
-          )}
-          contentContainerStyle={styles.relatedList}
-        />
-      </ScrollView>
-    </LinearGradient>
+      <Text style={styles.relatedTitle}>Related Videos</Text>
+      <FlatList
+        data={relatedVideos}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.relatedVideoCard}>
+            <Image source={{ uri: item.image }} style={styles.relatedImage} />
+            <Text style={styles.relatedTitleText} numberOfLines={2}>
+              {item.title}
+            </Text>
+            <Text style={styles.relatedDetails}>
+              {item.author} • {item.views}
+            </Text>
+          </TouchableOpacity>
+        )}
+        contentContainerStyle={styles.relatedList}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingBottom:80,
+    flexGrow: 1,
+    padding: 16,
+    backgroundColor: "#F5F5F7",
   },
   videoContainer: {
-    width: "100%",
-    height: Dimensions.get("window").height * 0.3,
+    marginBottom: 16,
+    borderRadius: 12,
+    overflow: "hidden",
     backgroundColor: "#000",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  video: {
-    width: "100%",
-    height: "100%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+    elevation: 5,
   },
   playButton: {
     position: "absolute",
-    padding: 16,
-    borderRadius: 50,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -30 }, { translateY: -22 }],
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    borderRadius: 30,
+    padding: 10,
   },
   detailsContainer: {
-    flex: 1,
-    padding: 16,
+    marginBottom: 24,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "700",
-    color: "#4A2C00",
-    fontFamily: "Georgia",
+    color: "#1C1C1E",
     marginBottom: 8,
   },
-  author: {
-    fontSize: 16,
-    color: "#666",
-    fontFamily: "Arial",
-    marginBottom: 8,
-  },
-  duration: {
+  views: {
     fontSize: 14,
-    color: "#FF5722",
-    fontFamily: "Arial",
+    color: "#666",
     marginBottom: 16,
+  },
+  actionsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 16,
+  },
+  actionButton: {
+    alignItems: "center",
+  },
+  actionText: {
+    fontSize: 12,
+    color: "#666",
+    marginTop: 4,
   },
   description: {
     fontSize: 14,
-    color: "#4A2C00",
-    fontFamily: "Arial",
+    color: "#1C1C1E",
     lineHeight: 20,
-    marginBottom: 24,
   },
   relatedTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
-    color: "#4A2C00",
-    fontFamily: "Georgia",
+    color: "#1C1C1E",
     marginBottom: 16,
   },
   relatedVideoCard: {
-    width: 160,
+    width: 200,
     marginRight: 16,
+    backgroundColor: "#FFF",
+    borderRadius: 12,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   relatedImage: {
     width: "100%",
-    height: 100,
-    borderRadius: 8,
-    marginBottom: 8,
+    height: 120,
+    borderRadius: 12,
   },
   relatedTitleText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#4A2C00",
-    fontFamily: "Georgia",
-    lineHeight: 18,
+    color: "#1C1C1E",
+    margin: 8,
   },
   relatedDetails: {
     fontSize: 12,
     color: "#666",
-    fontFamily: "Arial",
+    marginHorizontal: 8,
+    marginBottom: 8,
   },
   relatedList: {
-    paddingBottom: 80,
+    paddingBottom: 120,
   },
 });
 

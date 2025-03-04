@@ -77,7 +77,6 @@ export default function SettingsScreen() {
 
             <TouchableOpacity
               onPress={() => {
-                // handle onPress
               }}
             >
               <View style={styles.profileAction}>
@@ -95,7 +94,7 @@ export default function SettingsScreen() {
               <View style={[styles.rowWrapper, styles.rowFirst]}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle onPress
+                    
                   }}
                   style={styles.row}
                 >
@@ -156,7 +155,7 @@ export default function SettingsScreen() {
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle onPress
+                   
                     navigation.navigate("Podcast");
                   }}
                   style={styles.row}
@@ -181,7 +180,7 @@ export default function SettingsScreen() {
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle onPress
+                   
                     navigation.navigate("Music");
                   }}
                   style={styles.row}
@@ -204,24 +203,23 @@ export default function SettingsScreen() {
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle gallery navigation or action
+                    
                     navigation.navigate("Gallery");
                   }}
                   style={styles.row}
                 >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} 
                   >
                     <FeatherIcon
                       color="#fff"
-                      name="image" // Use the gallery icon name from Feather Icons
+                      name="image" 
                       size={20}
                     />
                   </View>
                   <Text style={styles.rowLabel}>Photo Gallery</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>My Albums</Text>{" "}
-                  {/* Optional, update as needed */}
+                  <Text style={styles.rowValue}>My Albums</Text>
                   <FeatherIcon
                     color="#C6C6C6"
                     name="chevron-right"
@@ -232,24 +230,23 @@ export default function SettingsScreen() {
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle gallery navigation or action
+                    
                     navigation.navigate("Donation");
                   }}
                   style={styles.row}
                 >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} 
                   >
                     <MaterialIcons
                       color="#fff"
-                      name="attach-money" // Use the gallery icon name from Feather Icons
+                      name="attach-money" 
                       size={20}
                     />
                   </View>
                   <Text style={styles.rowLabel}>Donation</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>donation</Text>{" "}
-                  {/* Optional, update as needed */}
+                  <Text style={styles.rowValue}>donation</Text>
                   <FeatherIcon
                     color="#C6C6C6"
                     name="chevron-right"
@@ -261,24 +258,23 @@ export default function SettingsScreen() {
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle gallery navigation or action
                     navigation.navigate("ystore");
                   }}
                   style={styles.row}
                 >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} 
                   >
                     <MaterialIcons
                       color="#fff"
-                      name="attach-money" // Use the gallery icon name from Feather Icons
+                      name="attach-money" 
                       size={20}
                     />
                   </View>
                   <Text style={styles.rowLabel}>Y-Store</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>Y-Store</Text>{" "}
-                  {/* Optional, update as needed */}
+                  <Text style={styles.rowValue}>Y-Store</Text>
+                  
                   <FeatherIcon
                     color="#C6C6C6"
                     name="chevron-right"
@@ -290,24 +286,24 @@ export default function SettingsScreen() {
               <View style={styles.rowWrapper}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle gallery navigation or action
+                    
                     navigation.navigate("favourites");
                   }}
                   style={styles.row}
                 >
                   <View
-                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} // Change background color for gallery theme
+                    style={[styles.rowIcon, { backgroundColor: "#FFA500" }]} 
                   >
                     <MaterialIcons
                       color="#fff"
-                      name="image" // Use the gallery icon name from Feather Icons
+                      name="image" 
                       size={20}
                     />
                   </View>
                   <Text style={styles.rowLabel}>My Yuja Library</Text>
                   <View style={styles.rowSpacer} />
-                  <Text style={styles.rowValue}>My Yuja Library</Text>{" "}
-                  {/* Optional, update as needed */}
+                  <Text style={styles.rowValue}>My Yuja Library</Text>
+                 
                   <FeatherIcon
                     color="#C6C6C6"
                     name="chevron-right"

@@ -7,11 +7,6 @@ const LearnHanumanChalisa = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backText}>{"< Back"}</Text>
-      </TouchableOpacity>
-      <Text style={styles.greeting}>Hi Dhiraj!</Text>
-      <Text style={styles.subText}>Good Morning!</Text>
       <View style={styles.progressContainer}>
         <Progress.Bar progress={progress} width={300} color="#FFA500" />
         <Text style={styles.progressText}>{Math.floor(progress * 100)}% completed</Text>

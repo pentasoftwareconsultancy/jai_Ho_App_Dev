@@ -24,7 +24,7 @@ const CalAppScreen = ({ route }) => {
   useEffect(() => {
     const loadSound = async () => {
       const { sound: audioSound } = await Audio.Sound.createAsync(
-        require("../../assets/audios/jaap.mp3")
+        require("../../assets/audios/jsr.mp3")
       );
       setSound(audioSound);
     };
