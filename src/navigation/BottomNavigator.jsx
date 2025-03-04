@@ -51,6 +51,7 @@ import VideoPodcastPlayer from "../screens/VideoPodcastPlayer";
 import BhajanAudioPlayerScreen from "../screens/BhajanAudioPlayerScreen";
 import BhajanVideoPlayerScreen from "../screens/BhajanVideoPlayerScreen";
 import HanumanChalisaVideoScreen from "../screens/HanumanChalisaVideoScreen";
+import EditProfile from "../screens/EditProfile";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -98,7 +99,7 @@ const TabButton = (props) => {
             Animated.spring(textScale, { toValue: 0, useNativeDriver: true }),
           ]).start();
         }
-      }, 1000); 
+      }, 1000);
 
       return () => clearTimeout(timer); // Clear the timer if the component unmounts
     } else {
@@ -496,7 +497,22 @@ const ProfileStack = () => (
         ),
       })}
     />
-  </Stack.Navigator>
+
+    <Stack.Screen
+      name="EditProfileScreen"
+      component={EditProfile}
+      options={({ navigation }) => ({
+        headerLeft: () => (
+          <CustomBackIcon onPress={() => navigation.goBack()} />
+        ),
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <Text style={styles.titlename}>Edit Profile</Text>
+          </View>
+        ),
+      })}
+    />
+  </Stack.Navigator >
 );
 
 const SettingsStack = () => (

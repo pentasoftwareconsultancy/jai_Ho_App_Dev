@@ -1,112 +1,155 @@
+// import React, { useState } from "react";
+// import {
+//   View,
+//   Text,
+//   Image,
+//   TouchableOpacity,
+//   StyleSheet,
+//   ScrollView,
+// } from "react-native";
+// import Icon from "react-native-vector-icons/MaterialIcons"; // Import icon
+// import UserProfile from "../../assets/images/hanuman.jpg"; // Ensure the image exists
+// import { useNavigation } from "@react-navigation/native";
+
+// const ProfileScreen = () => {
+//   const [profile, setProfile] = useState({
+//     image: UserProfile,
+//   });
+
+//     const navigation = useNavigation();
+  
+
+//   const MenuItem = ({ title, onPress }) => (
+//     <TouchableOpacity style={styles.menuItem} onPress={onPress}>
+//       <Text style={styles.menuText}>{title}</Text>
+//       <Icon name="chevron-right" size={24} color="#777" /> {/* Arrow Icon */}
+//     </TouchableOpacity>
+//   );
+
+//   return (
+//     <View style={styles.container}>
+//       <ScrollView contentContainerStyle={styles.scrollContainer}>
+//         {/* Profile Image */}
+//         <View style={styles.profileSection}>
+//           <Image source={profile.image} style={styles.profileImage} />
+//           <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate("EditProfileScreen") }>
+//             <Text style={styles.editButtonText}>Edit Profile</Text>
+//           </TouchableOpacity>
+//         </View>
+
+//         {/* Menu Items with Arrows */}
+//         <MenuItem title="Settings" onPress={() => {}} />
+//         <MenuItem title="Billing Address" onPress={() => {}} />
+//         <MenuItem title="User Management" onPress={() => {}} />
+//         <MenuItem title="Information" onPress={() => {}} />
+//         <MenuItem title="Logout" onPress={() => {}} />
+//       </ScrollView>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     paddingHorizontal: 20,
+//   },
+//   scrollContainer: {
+//     alignItems: "center",
+//     paddingVertical: 20,
+//   },
+//   profileSection: {
+//     alignItems: "center",
+//     marginBottom: 20,
+//   },
+//   profileImage: {
+//     width: 100,
+//     height: 100,
+//     borderRadius: 50,
+//     marginBottom: 10,
+//   },
+//   editButton: {
+//     backgroundColor: "#FFA500",
+//     paddingVertical: 10,
+//     paddingHorizontal: 20,
+//     borderRadius: 8,
+//   },
+//   editButtonText: {
+//     fontSize: 16,
+//     color: "#fff",
+//     fontWeight: "bold",
+//   },
+//   menuItem: {
+//     width: "100%",
+//     flexDirection: "row", // Align text & arrow
+//     justifyContent: "space-between", // Space between text & icon
+//     alignItems: "center",
+//     backgroundColor: "#F3F3F3",
+//     padding: 15,
+//     borderRadius: 8,
+//     marginVertical: 8,
+//   },
+//   menuText: {
+//     fontSize: 16,
+//     fontWeight: "bold",
+//   },
+// });
+
+// export default ProfileScreen;
+
+
 import React, { useState } from "react";
 import {
   View,
   Text,
   Image,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import UserProfile from "../../assets/images/hanuman.jpg"; // Your local image
 
 const ProfileScreen = () => {
-  const [activeTab, setActiveTab] = useState("Profile");
+  const navigation = useNavigation();
 
-  const ProfileDetails = () => (
-    <View style={styles.profileDetails}>
-      <Text style={styles.label}>Name</Text>
-      <TextInput style={styles.input} value="Ram Sharma" editable={false} />
+  const [profile, setProfile] = useState({
+    image: UserProfile,
+    name: "Ankit Lal Sinha",
+    email: "ankitsinha25061909@gmail.com",
+    password: "password123",
+    dob: "1999-06-25",
+    address: "Patna, Bihar, India",
+  });
 
-      <Text style={styles.label}>Email</Text>
-      <TextInput
-        style={styles.input}
-        value="Ramsharma@gmail.com"
-        editable={false}
-      />
-
-      <Text style={styles.label}>Password</Text>
-      <TextInput
-        style={styles.input}
-        value="********"
-        secureTextEntry={true}
-        editable={false}
-      />
-
-      <Text style={styles.label}>Date of Birth</Text>
-      <TextInput style={styles.input} value="23/05/2000" editable={false} />
-
-      <Text style={styles.label}>Country/Region</Text>
-      <TextInput style={styles.input} value="Pune" editable={false} />
-    </View>
-  );
-
-  const PackageDetails = () => (
-    <View style={styles.packageDetails}>
-      <Text style={styles.sectionTitle}>Package Types</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.packageCard}>
-          <Text style={styles.packageTitle}>Gold</Text>
-          <Text style={styles.packageCount}>24</Text>
-        </View>
-        <View style={styles.packageCard}>
-          <Text style={styles.packageTitle}>Silver</Text>
-          <Text style={styles.packageCount}>18</Text>
-        </View>
-        <View style={styles.packageCard}>
-          <Text style={styles.packageTitle}>Bronze</Text>
-          <Text style={styles.packageCount}>11</Text>
-        </View>
-      </ScrollView>
-
-      <Text style={styles.sectionTitle}>Facilities</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.facilityCard}>
-          <Text style={styles.facilityTitle}>Food Safety Protocols</Text>
-          <Text style={styles.facilityStatus}>Bronze Certified</Text>
-        </View>
-        <View style={styles.facilityCard}>
-          <Text style={styles.facilityTitle}>Facilities & Maintenance</Text>
-          <Text style={styles.facilityStatus}>Silver Certified</Text>
-        </View>
-      </ScrollView>
-    </View>
+  const MenuItem = ({ title, onPress }) => (
+    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
+      <Text style={styles.menuText}>{title}</Text>
+      <Icon name="chevron-right" size={24} color="#777" />
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Hi Ram Sharma!</Text>
-        <Image
-          source={{
-            uri: "https://via.placeholder.com/50",
-          }}
-          style={styles.profileImage}
-        />
-      </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Profile Image */}
+        <View style={styles.profileSection}>
+          <Image source={profile.image} style={styles.profileImage} />
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => navigation.navigate("EditProfileScreen", { profile })}
+          >
+            <Text style={styles.editButtonText}>Edit Profile</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[
-            styles.tab,
-            activeTab === "Profile" && styles.activeTab,
-          ]}
-          onPress={() => setActiveTab("Profile")}
-        >
-          <Text style={styles.tabText}>Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.tab,
-            activeTab === "Package" && styles.activeTab,
-          ]}
-          onPress={() => setActiveTab("Package")}
-        >
-          <Text style={styles.tabText}>Package</Text>
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView>
-        {activeTab === "Profile" ? <ProfileDetails /> : <PackageDetails />}
+        {/* Menu Items */}
+        <MenuItem title="Settings" onPress={() => {}} />
+        <MenuItem title="Billing Address" onPress={() => {}} />
+        <MenuItem title="User Management" onPress={() => {}} />
+        <MenuItem title="Information" onPress={() => {}} />
+        <MenuItem title="Logout" onPress={() => {}} />
       </ScrollView>
     </View>
   );
@@ -118,96 +161,44 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 20,
   },
-  header: {
-    flexDirection: "row",
+  scrollContainer: {
     alignItems: "center",
-    marginVertical: 20,
+    paddingVertical: 20,
   },
-  backButton: {
-    marginRight: 10,
-  },
-  backText: {
-    fontSize: 20,
-    color: "#FFA500",
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-  tabContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  profileSection: {
+    alignItems: "center",
     marginBottom: 20,
   },
-  tab: {
-    padding: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "transparent",
-  },
-  activeTab: {
-    borderBottomColor: "#FFA500",
-  },
-  tabText: {
-    fontSize: 16,
-  },
-  profileDetails: {
-    marginVertical: 10,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  input: {
-    backgroundColor: "#F3F3F3",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  packageDetails: {
-    marginVertical: 10,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     marginBottom: 10,
   },
-  packageCard: {
+  editButton: {
     backgroundColor: "#FFA500",
-    padding: 15,
-    borderRadius: 10,
-    marginRight: 10,
-    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
   },
-  packageTitle: {
+  editButtonText: {
     fontSize: 16,
+    color: "#fff",
     fontWeight: "bold",
-    color: "#fff",
   },
-  packageCount: {
-    fontSize: 14,
-    color: "#fff",
-  },
-  facilityCard: {
+  menuItem: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "#F3F3F3",
     padding: 15,
-    borderRadius: 10,
-    marginRight: 10,
-    alignItems: "center",
+    borderRadius: 8,
+    marginVertical: 8,
   },
-  facilityTitle: {
-    fontSize: 14,
+  menuText: {
+    fontSize: 16,
     fontWeight: "bold",
-  },
-  facilityStatus: {
-    fontSize: 12,
-    color: "#FFA500",
   },
 });
 
