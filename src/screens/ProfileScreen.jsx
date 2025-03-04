@@ -136,6 +136,11 @@ const ProfileScreen = () => {
         {/* Profile Image */}
         <View style={styles.profileSection}>
           <Image source={profile.image} style={styles.profileImage} />
+
+          {/* Display Name and Email */}
+          <Text style={styles.name}>{profile.name}</Text>
+          <Text style={styles.email}>{profile.email}</Text>
+
           <TouchableOpacity
             style={styles.editButton}
             onPress={() => navigation.navigate("EditProfileScreen", { profile })}
@@ -173,6 +178,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginTop: 5,
+  },
+  email: {
+    fontSize: 14,
+    color: "#666",
     marginBottom: 10,
   },
   editButton: {
